@@ -68,7 +68,7 @@ public class ReviewerControl {
         int currentNumber = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
     }
 
-    private void setLoginManager(){
+    private void setLogoutAction(){
 
         loginManager.logOut();
     }
