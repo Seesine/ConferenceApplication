@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="model.File" table="routes">
+        <meta attribute="class-description">
+            This class contains the details of the file.
+        </meta>
+        <id name="idF" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="keywords" column="keywords" type="string"/>
+        <property name="topic" column="topic" type="string"/>
+        <property name="filedoc" column="filedoc" type="string"/>
+        <property name="level" column="level" type="utils.AcceptLevel"/>
+        <property name="idC" column="idC" type="int"/>
+    </class>
+</hibernate-mapping>
