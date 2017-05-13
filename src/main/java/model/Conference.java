@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 /**
  * Created by Dragos on 5/8/2017.
  */
@@ -8,12 +10,23 @@ public class Conference
     int idConference;
     String name;
     int noParticipants;
+    String deadline;
 
 
-    public Conference(int idConference,String name, int noParticipants) {
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public Conference(int idConference, String name, int noParticipants, String deadline) {
         this.idConference = idConference;
         this.name = name;
         this.noParticipants = noParticipants;
+        this.deadline = deadline;
+
     }
 
     @Override
@@ -22,6 +35,7 @@ public class Conference
                 "idConference=" + idConference +
                 ", name='" + name + '\'' +
                 ", noParticipants=" + noParticipants +
+                ", deadline=" + deadline +
                 '}';
     }
 
