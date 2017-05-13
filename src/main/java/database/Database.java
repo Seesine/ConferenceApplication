@@ -1,5 +1,9 @@
 package database;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.stat.SessionStatistics;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,35 +11,24 @@ import java.sql.SQLException;
 /**
  * Created by Cosmin on 4/4/2017.
  */
-public class Database {
-    private Connection connection;
-    private String path;
+public class Database
+{
+    private static SessionFactory factory;
 
-    public void execute(String sql) throws SQLException {
-        //System.out.println("Executing sql " + sql);
-        connection.prepareStatement(sql);
-    }
-
-    public Database(String path) throws ClassNotFoundException, SQLException {
-        //System.out.println("Loading driver...");
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            //System.out.println("Driver loaded!");
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException("Cannot find the driver in the classpath !", e);
+    public Database(String path) throws ClassNotFoundException, SQLException
+    {
+        try
+        {
+            this.factory = new Configuration().configure().buildSessionFactory();
         }
-        //Class.forName("org.mysql.JDBC");
-        this.path = "jdbc:mysql:" + path;
+        catch (Throwable ex)
+        {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
-    }
-    public boolean startConnection(String user, String password) throws SQLException {
-        if ((this.connection = DriverManager.getConnection(this.path, user, password)) != null)
-            return true;
-        else
-            return false;
-    }
-    public Connection getConnection() {
-        return connection;
+    public SessionFactory getConnection() {
+        return factory;
     }
 }

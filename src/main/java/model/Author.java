@@ -5,9 +5,19 @@ package model;
  */
 public class Author
 {
+
+    private int ida;
     private String username;
     private String password;
     private String name;
+
+    public int getIda() {
+        return ida;
+    }
+
+    public void setIda(int ida) {
+        this.ida = ida;
+    }
 
     public String getUsername() {
         return username;

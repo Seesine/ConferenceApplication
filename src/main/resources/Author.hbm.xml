@@ -4,16 +4,15 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="model.Author" table="routes">
+    <class name="model.Author" table="authors">
         <meta attribute="class-description">
             This class contains the flight detail.
         </meta>
-        <id name="flightId" type="int" column="id">
+        <id name="ida" type="int" column="ida">
             <generator class="native"/>
         </id>
-        <property name="destination" column="destination" type="string"/>
-        <property name="airport" column="airport" type="string"/>
-        <property name="freeseats" column="freeseats" type="int"/>
-        <property name="datehour" column="date" type="string"/>
+        <property name="username" column="username" type="string"/>
+        <property name="password" column="password" type="string"/>
+        <property name="name" column="name" type="string"/>
     </class>
 </hibernate-mapping>
