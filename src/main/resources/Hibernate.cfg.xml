@@ -14,5 +14,6 @@
         <property name="current_session_context_class">thread</property>
 
         <mapping resource="Comitee.hbm.xml"/>
+        <mapping resource="File.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
