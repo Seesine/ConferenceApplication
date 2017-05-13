@@ -1,28 +1,61 @@
 package repository;
 
+import model.CM;
+import model.File;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Dragos on 5/8/2017.
  */
 public class ReviewerRepository implements CRUDRepository{
-    private Connection dbConnection;
-    public ReviewerRepository(Connection connection) {
-        this.dbConnection = connection;
+    //TODO
+    /*LOGIN function
+    *@param: user si pass
+    *@return: true/false if found in database
+    */
+    private static SessionFactory factory;
+    private List<CM> reviewerList = new ArrayList<>();
+    public ReviewerRepository() {
+        try {
+            this.factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            reviewerList = session.createQuery("FROM CM").list();
+            for (Iterator iterator = reviewerList.iterator(); iterator.hasNext(); ) {
+                CM c = (CM) iterator.next();
+                System.out.print("Id: " + c.getId());
+            }
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
-    public boolean login(String user, String password) throws SQLException {
-        PreparedStatement preparedStatement = this.dbConnection.prepareStatement(
-                "select * from `cm` where username=? and password=?");
-        preparedStatement.setString(1, user);
-        preparedStatement.setString(2, password);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        //not saved
-        // exista input-uri cu username si password
-        if (resultSet.next())
-            return true;
+    public boolean login(String username, String password){
+        for(int i = 0; i < reviewerList.size(); i++){
+            if(reviewerList.get(i).getUsername().equals(username) && reviewerList.get(i).getPassword().equals(password))
+                return true;
+        }
         return false;
     }
 }

@@ -1,5 +1,6 @@
 package main;
 
+import controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,128 +8,245 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import controller.LoginControl;
-import controller.ReviewerControl;
 import database.Database;
-import repository.AttendantRepository;
-import repository.AuthorsRepository;
-import repository.CMRepository;
-import repository.ReviewerRepository;
+import model.Attendant;
+import org.hibernate.SessionFactory;
+import repository.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 
 /**
  * Created by Dragos on 4/4/2017.
  */
 
-public class Main extends Application {
+public class Main extends Application
+{
     private FXMLLoader loader;
     private FXMLLoader loader2;
+    private FXMLLoader loader3;
+    private FXMLLoader loader4;
+    private FXMLLoader loader5;
+    private FXMLLoader loader6;
+
     private Stage primaryStage;
     private AnchorPane rootLayout1;
-    private TabPane rootLayout2;
-    private static void execute(String sql) {
+    private AnchorPane rootLayout2;
+    private AnchorPane rootLayout3;
+    private AnchorPane rootLayout4;
+    private AnchorPane rootLayout5;
+    private AnchorPane rootLayout6;
+
+    private Scene scene1;
+    private Scene scene2;
+    private Scene scene3;
+    private Scene scene4;
+    private Scene scene5;
+    private Scene scene6;
+    private LoginControl controlLogin;
+    private ComiteeControl controlComitee;
+    private ReviewerControl controlReviewer;
+    private AttendantControl controlAttendant;
+    private AuthorControl controlAuthor;
+    private AdminControl controlAdmin;
+
+
+    private CMRepository CMLRepository;
+    private AttendantRepository ATLRepository;
+    private AuthorsRepository AULRepository;
+    private ReviewerRepository RVWRepo;
+    private AdminRepository ADRepo;
+
+    private static void execute(String sql)
+    {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 
-    public void start(Stage primaryStage) throws ClassNotFoundException, SQLException {
+    public void start(Stage primaryStage)
+    {
+        Database dtb = new Database();
+        SessionFactory factory = dtb.getConnection();
+        CMRepository CMLRepository = new CMRepository();
+        AttendantRepository ATLRepository = new AttendantRepository();
+        AuthorsRepository AULRepository = new AuthorsRepository();
+        ReviewerRepository RVWRepo = new ReviewerRepository();
+        AdminRepository ADRepo = new AdminRepository(factory);
+
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loader2 = new FXMLLoader();
-        LoginView();
-    }
+        loader3 = new FXMLLoader();
+        loader4 = new FXMLLoader();
+        loader5 = new FXMLLoader();
+        loader6 = new FXMLLoader();
 
-    public void authenticated(int response) throws SQLException, ClassNotFoundException {
-        if (response == 1)
+        try
         {
-            MainViewCM();
-        }
-        else if (response == 2)
-        {
-            MainViewAuthor();
-        }
-        else if (response ==3)
-        {
-            MainViewAttendant();
-        }
-        else if (response == 4){
-            MainViewReviewer();
-        }
-    }
-
-    private void LoginView() throws ClassNotFoundException, SQLException {
-        // xampp db connect
-        // asta o folositi toti
-        Database db = new Database("//localhost:3306/cms");
-        if (!db.startConnection("root", "")) // daca baza de date are user si pass
-        return;
-
-        CMRepository cmloginrep = new CMRepository(db.getConnection());
-        AttendantRepository atloginrep = new AttendantRepository(db.getConnection());
-        AuthorsRepository atuloginrep = new AuthorsRepository(db.getConnection());
-        ReviewerRepository RVWRepo = new ReviewerRepository(db.getConnection());
-
-
-        try {
             String pathToFxml = "src/main/resources/LoginWindow.fxml";
             URL fxmlUrl = new File(pathToFxml).toURI().toURL();
             loader.setLocation(fxmlUrl);
-            LoginControl controlLogin = new LoginControl(cmloginrep, atloginrep, atuloginrep, RVWRepo);
+
+            controlLogin = new LoginControl(CMLRepository,ATLRepository,AULRepository,RVWRepo,ADRepo);
             loader.setController(controlLogin);
             rootLayout1 = loader.load();
-            Scene scene = new Scene(rootLayout1);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            scene1 = new Scene(rootLayout1);
+        }
 
-            controlLogin.initManager(this);
-
-        } catch (IOException ex) {
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
-    }
 
-    private void MainViewAuthor()
-    {
+        try
+        {
+            String pathToFxml = "src/main/resources/ReviewerWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader2.setLocation(fxmlUrl);
 
-    }
 
-    private void MainViewAttendant()
-    {
+            ReviewerControl controlMain = new ReviewerControl(this);
+            loader2.setController(controlMain);
+            rootLayout2 = loader2.load();
+            scene2 = new Scene(rootLayout2);
+        }
 
-    }
-
-    private void MainViewCM()
-    {
-
-    }
-
-    private void MainViewReviewer() throws SQLException, ClassNotFoundException {
-        Database db = new Database("//localhost:3306/cms");
-        if (!db.startConnection("root", "")) // daca baza de date are user si pass
-            return;
-        ReviewerRepository reviewRepo = new ReviewerRepository(db.getConnection());
-
-        try {
-            FXMLLoader loader=new FXMLLoader(getClass().getResource("/ReviewerWindow.fxml"));
-            Pane myPane = (Pane) loader.load();
-            ReviewerControl ctrl=loader.getController();
-            ctrl.initData();
-            Scene myScene = new Scene(myPane);
-            Stage newStage = new Stage();
-            newStage.setScene(myScene);
-
-            newStage.show();
-            //controlLogin.initManager(this);
-
-        } catch (IOException ex) {
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
+
+        try
+        {
+            String pathToFxml = "src/main/resources/ComiteeWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader3.setLocation(fxmlUrl);
+
+
+            controlComitee = new ComiteeControl(this);
+            loader3.setController(controlComitee);
+            rootLayout3 = loader3.load();
+            scene3 = new Scene(rootLayout3);
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        try
+        {
+            String pathToFxml = "src/main/resources/AuthorWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader4.setLocation(fxmlUrl);
+
+
+            controlAuthor = new AuthorControl(this);
+            loader4.setController(controlAuthor);
+            rootLayout4 = loader4.load();
+            scene4 = new Scene(rootLayout4);
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+        try
+        {
+            String pathToFxml = "src/main/resources/AdminWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader5.setLocation(fxmlUrl);
+
+
+            controlAdmin = new AdminControl(this);
+            loader5.setController(controlAdmin);
+            rootLayout5 = loader5.load();
+            scene5 = new Scene(rootLayout5);
+        }
+
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        try
+        {
+            String pathToFxml = "src/main/resources/AttendantWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader6.setLocation(fxmlUrl);
+
+
+            controlAttendant = new AttendantControl(this);
+            loader6.setController(controlAttendant);
+            rootLayout6 = loader6.load();
+            scene6 = new Scene(rootLayout6);
+        }
+
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        LoginView();
+    }
+
+    public void authenticated(int check)
+    {
+        if (check == 2)
+            ReviewerView();
+        if (check == 3)
+            ComitteeView();
+        if (check == 4)
+            AuthorView();
+        if (check == 5)
+            AdminView();
+        if (check == 6)
+            AttendantView();
+    }
+
+    public void logOut()
+    {
+        LoginView();
+    }
+
+    public void LoginView()
+    {
+        primaryStage.setScene(scene1);
+        primaryStage.show();
+        controlLogin.initManager(this);
+    }
+
+    private void ReviewerView()
+    {
+        primaryStage.setScene(scene2);
+        primaryStage.show();
+    }
+
+    private void ComitteeView()
+    {
+        primaryStage.setScene(scene3);
+        primaryStage.show();
+    }
+
+    private void AuthorView()
+    {
+        primaryStage.setScene(scene4);
+        primaryStage.show();
+    }
+
+    private void AdminView()
+    {
+        primaryStage.setScene(scene5);
+        primaryStage.show();
+    }
+    private void AttendantView()
+    {
+        primaryStage.setScene(scene6);
+        primaryStage.show();
     }
 }
