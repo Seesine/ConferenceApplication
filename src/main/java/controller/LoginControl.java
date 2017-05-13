@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import main.Main;
-import repository.AttendantRepository;
-import repository.AuthorsRepository;
-import repository.CMRepository;
-import repository.ReviewerRepository;
+import repository.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,6 +24,7 @@ public class LoginControl implements Initializable {
     @FXML private RadioButton cmRadio, reviewRadio;
     @FXML private RadioButton attendantRadio;
     @FXML private RadioButton authorRadio;
+    @FXML private RadioButton adminRadio;
     private ToggleGroup group;
 
     // Logins Repositories
@@ -34,14 +32,16 @@ public class LoginControl implements Initializable {
     private AttendantRepository ATLRepository;
     private AuthorsRepository AULRepository;
     private ReviewerRepository RVWRepo;
+    private AdminRepository ADRepo;
 
 
-    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo)
+    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo, AdminRepository ADRepo)
     {
         this.CMLRepository = cmloginRep;
         this.ATLRepository = atloginrep;
         this.AULRepository = atuloginrep;
         this.RVWRepo = RVWRepo;
+        this.ADRepo = ADRepo;
     }
 
     public void initialize(URL location, ResourceBundle resources)
@@ -58,6 +58,7 @@ public class LoginControl implements Initializable {
         reviewRadio.setToggleGroup(group);
 
         authorRadio.setToggleGroup(group);
+        adminRadio.setToggleGroup(group);
     }
 
     public void initManager(final Main loginManager)
@@ -70,7 +71,6 @@ public class LoginControl implements Initializable {
                     int response = 0;
                     String userName = userField.getText();
                     String password = passwordField.getText();
-                    //String selected = group.getSelectedToggle().getUserData().toString();
                     if (userName == null) {
                         showErrorMessage("Dati un username");
                     } else if (password == null) {
@@ -79,68 +79,42 @@ public class LoginControl implements Initializable {
                         {
                             if (cmRadio.isSelected())
                             {
-                                //aici va fi legagura cu repository-ul CM
-                                // (ar fi o chestie sa returneze in respone valid,
-                                // daca e corecta parola, sau invalid in caz contrar
-                                // (e o verificare pt response mai jos)
-                                try {
                                     if (CMLRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
-                                        response = 1;
+                                        response = 3;
                                         }
-
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                        //
-                                    }
                             }
                             else if (reviewRadio.isSelected())
                             {
-                                try {
                                     if (RVWRepo.login(userName, password)) {
-                                        showMessage(Alert.AlertType.CONFIRMATION);
-                                        response = 4;
-                                    }
-
-                                }catch(SQLException e) {
-                                    e.printStackTrace();
-                                    //
-                                }
-                            }
-
-                            else if (authorRadio.isSelected())
-                            {
-                                //aici va fi legagura cu repository-ul author
-                                // (ar fi o chestie sa returneze in respone valid,
-                                // daca e corecta parola, sau invalid in caz contrar
-                                // (e o verificare pt response mai jos)
-                                try {
-                                    if (AULRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
                                         response = 2;
                                     }
 
-                                }catch(SQLException e) {
-                                    e.printStackTrace();
-                                    //
-                                }
+                            }
+
+                            else if (authorRadio.isSelected())
+                            {
+                                    if (AULRepository.login(userName, password))
+                                    {
+                                        showMessage(Alert.AlertType.CONFIRMATION);
+                                        response = 4;
+                                    }
                             }
                             else if (attendantRadio.isSelected())
                             {
-                                //aici va fi legagura cu repository-ul attendant
-                                // (ar fi o chestie sa returneze in respone valid,
-                                // daca e corecta parola, sau invalid in caz contrar
-                                // (e o verificare pt response mai jos)
-                                try {
                                     if (ATLRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
-                                        response = 3;
+                                        response = 6;
+                                    }
+                            }
+                            else if (adminRadio.isSelected())
+                            {
+                                    if (ADRepo.login(userName, password)) {
+                                        showMessage(Alert.AlertType.CONFIRMATION);
+                                        response = 5;
                                     }
 
-                                }catch(SQLException e) {
-                                    e.printStackTrace();
-                                    //
-                                }
                             }
                             if (response == 0) {
                                 showErrorMessage("Username sau parola invalida");
@@ -148,13 +122,8 @@ public class LoginControl implements Initializable {
                             }
                             else
                             {
-                                try {
-                                    loginManager.authenticated(response);
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
+                                loginManager.authenticated(response);
+
                             }
                     }
             }

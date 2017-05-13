@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import main.Main;
 import model.File;
 import repository.FileRepository;
 import repository.ReviewerRepository;
@@ -31,7 +32,11 @@ public class ReviewerControl {
     private Button openFileBtn;
     private Button button2;
 
-    public ReviewerControl(){
+    final Main loginManager;
+
+    public ReviewerControl(final Main loginManager)
+    {
+        this.loginManager = loginManager;
     }
     public void initData(){
         fileTable.getItems().clear();
@@ -61,6 +66,11 @@ public class ReviewerControl {
     private void reviewHandle(ActionEvent event){
         AcceptLevel currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
         int currentNumber = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
+    }
+
+    private void setLoginManager(){
+
+        loginManager.logOut();
     }
 
 }
