@@ -29,6 +29,15 @@ public class Conference
 
     }
 
+    public Conference(String name, int noParticipants, String deadline) {
+        this.name = name;
+        this.noParticipants = noParticipants;
+        this.deadline = deadline;
+
+    }
+
+    public Conference() {}
+
     @Override
     public String toString() {
         return "Conference{" +
