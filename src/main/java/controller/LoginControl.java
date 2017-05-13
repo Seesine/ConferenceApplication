@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import main.Main;
 import repository.AttendantRepository;
 import repository.AuthorsRepository;
-import repository.ComiteeRepository;
+import repository.CMRepository;
 import repository.ReviewerRepository;
 
 import java.net.URL;
@@ -30,13 +30,13 @@ public class LoginControl implements Initializable {
     private ToggleGroup group;
 
     // Logins Repositories
-    private ComiteeRepository CMLRepository;
+    private CMRepository CMLRepository;
     private AttendantRepository ATLRepository;
     private AuthorsRepository AULRepository;
     private ReviewerRepository RVWRepo;
 
 
-    public LoginControl(ComiteeRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo)
+    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo)
     {
         this.CMLRepository = cmloginRep;
         this.ATLRepository = atloginrep;
