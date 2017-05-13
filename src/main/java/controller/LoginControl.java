@@ -55,6 +55,7 @@ public class LoginControl implements Initializable {
         cmRadio.setSelected(true);
 
         attendantRadio.setToggleGroup(group);
+        reviewRadio.setToggleGroup(group);
 
         authorRadio.setToggleGroup(group);
     }
@@ -82,28 +83,31 @@ public class LoginControl implements Initializable {
                                 // (ar fi o chestie sa returneze in respone valid,
                                 // daca e corecta parola, sau invalid in caz contrar
                                 // (e o verificare pt response mai jos)
-                                if(reviewRadio.isSelected()){
-                                    try{
-                                        if(RVWRepo.login(userName, password)){
-                                            response = 4;
-                                        }
-                                    }catch(SQLException ex){
-                                        ex.printStackTrace();
-                                    }
-                                }
-                                else {
-                                    try {
-                                        if (CMLRepository.login(userName, password)) {
-                                            showMessage(Alert.AlertType.CONFIRMATION);
-                                            response = 1;
+                                try {
+                                    if (CMLRepository.login(userName, password)) {
+                                        showMessage(Alert.AlertType.CONFIRMATION);
+                                        response = 1;
                                         }
 
                                     } catch (SQLException e) {
                                         e.printStackTrace();
                                         //
                                     }
+                            }
+                            else if (reviewRadio.isSelected())
+                            {
+                                try {
+                                    if (RVWRepo.login(userName, password)) {
+                                        showMessage(Alert.AlertType.CONFIRMATION);
+                                        response = 4;
+                                    }
+
+                                }catch(SQLException e) {
+                                    e.printStackTrace();
+                                    //
                                 }
                             }
+
                             else if (authorRadio.isSelected())
                             {
                                 //aici va fi legagura cu repository-ul author
