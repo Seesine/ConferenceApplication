@@ -12,7 +12,7 @@ import controller.ReviewerControl;
 import database.Database;
 import repository.AttendantRepository;
 import repository.AuthorsRepository;
-import repository.ComiteeRepository;
+import repository.CMRepository;
 import repository.ReviewerRepository;
 
 import java.io.File;
@@ -70,7 +70,7 @@ public class Main extends Application {
         if (!db.startConnection("root", "")) // daca baza de date are user si pass
         return;
 
-        ComiteeRepository cmloginrep = new ComiteeRepository(db.getConnection());
+        CMRepository cmloginrep = new CMRepository(db.getConnection());
         AttendantRepository atloginrep = new AttendantRepository(db.getConnection());
         AuthorsRepository atuloginrep = new AuthorsRepository(db.getConnection());
         ReviewerRepository RVWRepo = new ReviewerRepository(db.getConnection());
