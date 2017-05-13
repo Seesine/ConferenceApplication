@@ -68,6 +68,7 @@ public class ReviewerControl {
         int currentNumber = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
     }
 
+    @FXML
     private void setLogoutAction(){
 
         loginManager.logOut();
