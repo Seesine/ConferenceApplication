@@ -5,6 +5,9 @@ package model;
  */
 public class CM {
 
+
+    public CM() {}
+
     public CM(int id, String username, String password, String name, String affiliation, String email, String webpage) {
         this.id = id;
         this.username = username;

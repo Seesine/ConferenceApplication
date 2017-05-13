@@ -8,10 +8,10 @@ import java.sql.ResultSet;
 /**
  * Created by Cosmin on 4/4/2017.
  */
-public class ComiteeRepository implements CRUDRepository
+public class CMRepository implements CRUDRepository
 {
     private Connection dbConnection;
-    public ComiteeRepository(Connection connection) {
+    public CMRepository(Connection connection) {
         this.dbConnection = connection;
     }
     public boolean login(String user, String password) throws SQLException {
