@@ -2,8 +2,8 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import main.repository.ReviewerRepository;
-import main.utils.AcceptLevel;
+import repository.ReviewerRepository;
+import utils.AcceptLevel;
 
 /**
  * Created by Dragos on 5/8/2017.

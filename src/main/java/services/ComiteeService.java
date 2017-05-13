@@ -1,6 +1,6 @@
 package services;
 
-import main.repository.ComiteeRepository;
+import repository.ComiteeRepository;
 
 /**
  * Created by Dragos on 5/8/2017.

@@ -5,11 +5,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import main.main.Main;
-import main.repository.AttendantRepository;
-import main.repository.AuthorsRepository;
-import main.repository.ComiteeRepository;
-import main.repository.ReviewerRepository;
+import main.Main;
+import repository.AttendantRepository;
+import repository.AuthorsRepository;
+import repository.ComiteeRepository;
+import repository.ReviewerRepository;
 
 import java.net.URL;
 import java.sql.SQLException;
