@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import model.File;
@@ -18,14 +19,20 @@ public class ReviewerControl {
     ComboBox<AcceptLevel> acceptCB = new ComboBox<>();
     @FXML
     private TableView<File> fileTable;
+    @FXML
+    private Button reviewButton;
+    private Button openFileBtn;
+    private Button button2;
+
     public ReviewerControl(){
     }
     public void initData(){
         fileTable.getItems().clear();
-
         for(File f : fileRepo.getAll())
             fileTable.getItems().add(f);
-
         acceptCB.getItems().addAll(AcceptLevel.values());
     }
+
+
+
 }
