@@ -24,17 +24,18 @@ public class LoginControl implements Initializable {
     @FXML private RadioButton cmRadio, reviewRadio;
     @FXML private RadioButton attendantRadio;
     @FXML private RadioButton authorRadio;
+    @FXML private RadioButton adminRadio;
     private ToggleGroup group;
 
     // Logins Repositories
-    private ComiteeRepository CMLRepository;
+    private CMRepository CMLRepository;
     private AttendantRepository ATLRepository;
     private AuthorsRepository AULRepository;
     private ReviewerRepository RVWRepo;
     private AdminRepository ADRepo;
 
 
-    public LoginControl(ComiteeRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo, AdminRepository ADRepo)
+    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo, AdminRepository ADRepo)
     {
         this.CMLRepository = cmloginRep;
         this.ATLRepository = atloginrep;
@@ -70,7 +71,6 @@ public class LoginControl implements Initializable {
                     int response = 0;
                     String userName = userField.getText();
                     String password = passwordField.getText();
-                    //String selected = group.getSelectedToggle().getUserData().toString();
                     if (userName == null) {
                         showErrorMessage("Dati un username");
                     } else if (password == null) {
@@ -79,57 +79,42 @@ public class LoginControl implements Initializable {
                         {
                             if (cmRadio.isSelected())
                             {
-                                try {
                                     if (CMLRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
-                                        response = 1;
+                                        response = 3;
                                         }
-
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                        //
-                                    }
                             }
                             else if (reviewRadio.isSelected())
                             {
-                                try {
                                     if (RVWRepo.login(userName, password)) {
-                                        showMessage(Alert.AlertType.CONFIRMATION);
-                                        response = 4;
-                                    }
-
-                                }catch(SQLException e) {
-                                    e.printStackTrace();
-                                    //
-                                }
-                            }
-
-                            else if (authorRadio.isSelected())
-                            {
-                                try {
-                                    if (AULRepository.login(userName, password))
-                                    {
                                         showMessage(Alert.AlertType.CONFIRMATION);
                                         response = 2;
                                     }
 
-                                }catch(SQLException e) {
-                                    e.printStackTrace();
-                                    //
-                                }
+                            }
+
+                            else if (authorRadio.isSelected())
+                            {
+                                    if (AULRepository.login(userName, password))
+                                    {
+                                        showMessage(Alert.AlertType.CONFIRMATION);
+                                        response = 4;
+                                    }
                             }
                             else if (attendantRadio.isSelected())
                             {
-                                try {
                                     if (ATLRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
-                                        response = 3;
+                                        response = 6;
+                                    }
+                            }
+                            else if (adminRadio.isSelected())
+                            {
+                                    if (ADRepo.login(userName, password)) {
+                                        showMessage(Alert.AlertType.CONFIRMATION);
+                                        response = 5;
                                     }
 
-                                }catch(SQLException e) {
-                                    e.printStackTrace();
-                                    //
-                                }
                             }
                             if (response == 0) {
                                 showErrorMessage("Username sau parola invalida");
@@ -137,13 +122,8 @@ public class LoginControl implements Initializable {
                             }
                             else
                             {
-                                try {
-                                    loginManager.authenticated(response);
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                } catch (ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
+                                loginManager.authenticated(response);
+
                             }
                     }
             }

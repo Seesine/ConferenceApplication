@@ -1,5 +1,6 @@
 package main;
 
+import controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,19 +8,13 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import controller.LoginControl;
-import controller.ReviewerControl;
 import database.Database;
-import repository.AttendantRepository;
-import repository.AuthorsRepository;
-import repository.ComiteeRepository;
-import repository.ReviewerRepository;
+import org.hibernate.SessionFactory;
+import repository.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
 
 /**
  * Created by Dragos on 4/4/2017.
@@ -32,6 +27,7 @@ public class Main extends Application
     private FXMLLoader loader3;
     private FXMLLoader loader4;
     private FXMLLoader loader5;
+    private FXMLLoader loader6;
 
     private Stage primaryStage;
     private AnchorPane rootLayout1;
@@ -39,13 +35,21 @@ public class Main extends Application
     private AnchorPane rootLayout3;
     private AnchorPane rootLayout4;
     private AnchorPane rootLayout5;
+    private AnchorPane rootLayout6;
 
     private Scene scene1;
     private Scene scene2;
     private Scene scene3;
     private Scene scene4;
     private Scene scene5;
+    private Scene scene6;
     private LoginControl controlLogin;
+
+    private CMRepository CMLRepository;
+    private AttendantRepository ATLRepository;
+    private AuthorsRepository AULRepository;
+    private ReviewerRepository RVWRepo;
+    private AdminRepository ADRepo;
 
     private static void execute(String sql)
     {
@@ -59,21 +63,29 @@ public class Main extends Application
 
     public void start(Stage primaryStage)
     {
-        //sdfdsdfds
+        Database dtb = new Database();
+        SessionFactory factory = dtb.getConnection();
+        CMRepository CMLRepository = new CMRepository();
+        AttendantRepository ATLRepository = new AttendantRepository();
+        AuthorsRepository AULRepository = new AuthorsRepository();
+        ReviewerRepository RVWRepo = new ReviewerRepository();
+        AdminRepository ADRepo = new AdminRepository(factory);
+
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loader2 = new FXMLLoader();
         loader3 = new FXMLLoader();
         loader4 = new FXMLLoader();
         loader5 = new FXMLLoader();
+        loader6 = new FXMLLoader();
 
         try
         {
-            String pathToFxml = "client/src/main/resources/LoginWindow.fxml";
+            String pathToFxml = "src/main/resources/LoginWindow.fxml";
             URL fxmlUrl = new File(pathToFxml).toURI().toURL();
             loader.setLocation(fxmlUrl);
 
-            LoginControl controlLogin = new LoginControl();
+            LoginControl controlLogin = new LoginControl(CMLRepository,ATLRepository,AULRepository,RVWRepo,ADRepo);
             loader.setController(controlLogin);
             rootLayout1 = loader.load();
             scene1 = new Scene(rootLayout1);
@@ -86,12 +98,12 @@ public class Main extends Application
 
         try
         {
-            String pathToFxml = "client/src/main/resources/MainWindow.fxml";
+            String pathToFxml = "src/main/resources/ReviewerWindow.fxml";
             URL fxmlUrl = new File(pathToFxml).toURI().toURL();
             loader2.setLocation(fxmlUrl);
 
 
-            MainClient controlMain = new MainClient(server,this);
+            ReviewerControl controlMain = new ReviewerControl(this);
             loader2.setController(controlMain);
             rootLayout2 = loader2.load();
             scene2 = new Scene(rootLayout2);
@@ -102,15 +114,95 @@ public class Main extends Application
             ex.printStackTrace();
         }
 
+        try
+        {
+            String pathToFxml = "src/main/resources/ComiteeWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader3.setLocation(fxmlUrl);
+
+
+            ComiteeControl controlComitee = new ComiteeControl(this);
+            loader3.setController(controlComitee);
+            rootLayout3 = loader3.load();
+            scene3 = new Scene(rootLayout3);
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        try
+        {
+            String pathToFxml = "src/main/resources/AuthorWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader4.setLocation(fxmlUrl);
+
+
+            AuthorControl controlAuthor = new AuthorControl(this);
+            loader4.setController(controlAuthor);
+            rootLayout4 = loader4.load();
+            scene4 = new Scene(rootLayout4);
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+        try
+        {
+            String pathToFxml = "src/main/resources/AdminWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader5.setLocation(fxmlUrl);
+
+
+            AdminControl controlAdmin = new AdminControl(this);
+            loader5.setController(controlAdmin);
+            rootLayout5 = loader5.load();
+            scene5 = new Scene(rootLayout5);
+        }
+
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        try
+        {
+            String pathToFxml = "src/main/resources/AttendantWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader6.setLocation(fxmlUrl);
+
+
+            AttendantControl controlAttendant = new AttendantControl(this);
+            loader6.setController(controlAttendant);
+            rootLayout6 = loader6.load();
+            scene6 = new Scene(rootLayout6);
+        }
+
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
         LoginView();
     }
 
-    public void authenticated()
+    public void authenticated(int check)
     {
-        MainView();
+        if (check == 2)
+            ReviewerView();
+        if (check == 3)
+            ComitteeView();
+        if (check == 4)
+            AuthorView();
+        if (check == 5)
+            AdminView();
+        if (check == 6)
+            AttendantView();
     }
 
-    public void logOut() throws RemoteException
+    public void logOut()
     {
         LoginView();
     }
@@ -128,26 +220,26 @@ public class Main extends Application
         primaryStage.show();
     }
 
-    private void AuthorView()
+    private void ComitteeView()
     {
         primaryStage.setScene(scene3);
         primaryStage.show();
     }
 
-    private void AdminView()
+    private void AuthorView()
     {
         primaryStage.setScene(scene4);
         primaryStage.show();
     }
 
-    private void CMView()
+    private void AdminView()
     {
         primaryStage.setScene(scene5);
         primaryStage.show();
     }
     private void AttendantView()
     {
-        primaryStage.setScene(scene2);
+        primaryStage.setScene(scene6);
         primaryStage.show();
     }
 }

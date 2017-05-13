@@ -15,7 +15,7 @@ public class Database
 {
     private static SessionFactory factory;
 
-    public Database(String path) throws ClassNotFoundException, SQLException
+    public Database()
     {
         try
         {
