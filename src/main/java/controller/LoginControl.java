@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import main.Main;
-import repository.AttendantRepository;
-import repository.AuthorsRepository;
-import repository.CMRepository;
-import repository.ReviewerRepository;
+import repository.*;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,18 +27,20 @@ public class LoginControl implements Initializable {
     private ToggleGroup group;
 
     // Logins Repositories
-    private CMRepository CMLRepository;
+    private ComiteeRepository CMLRepository;
     private AttendantRepository ATLRepository;
     private AuthorsRepository AULRepository;
     private ReviewerRepository RVWRepo;
+    private AdminRepository ADRepo;
 
 
-    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo)
+    public LoginControl(ComiteeRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo, AdminRepository ADRepo)
     {
         this.CMLRepository = cmloginRep;
         this.ATLRepository = atloginrep;
         this.AULRepository = atuloginrep;
         this.RVWRepo = RVWRepo;
+        this.ADRepo = ADRepo;
     }
 
     public void initialize(URL location, ResourceBundle resources)
@@ -58,6 +57,7 @@ public class LoginControl implements Initializable {
         reviewRadio.setToggleGroup(group);
 
         authorRadio.setToggleGroup(group);
+        adminRadio.setToggleGroup(group);
     }
 
     public void initManager(final Main loginManager)
@@ -79,10 +79,6 @@ public class LoginControl implements Initializable {
                         {
                             if (cmRadio.isSelected())
                             {
-                                //aici va fi legagura cu repository-ul CM
-                                // (ar fi o chestie sa returneze in respone valid,
-                                // daca e corecta parola, sau invalid in caz contrar
-                                // (e o verificare pt response mai jos)
                                 try {
                                     if (CMLRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
@@ -110,12 +106,9 @@ public class LoginControl implements Initializable {
 
                             else if (authorRadio.isSelected())
                             {
-                                //aici va fi legagura cu repository-ul author
-                                // (ar fi o chestie sa returneze in respone valid,
-                                // daca e corecta parola, sau invalid in caz contrar
-                                // (e o verificare pt response mai jos)
                                 try {
-                                    if (AULRepository.login(userName, password)) {
+                                    if (AULRepository.login(userName, password))
+                                    {
                                         showMessage(Alert.AlertType.CONFIRMATION);
                                         response = 2;
                                     }
@@ -127,10 +120,6 @@ public class LoginControl implements Initializable {
                             }
                             else if (attendantRadio.isSelected())
                             {
-                                //aici va fi legagura cu repository-ul attendant
-                                // (ar fi o chestie sa returneze in respone valid,
-                                // daca e corecta parola, sau invalid in caz contrar
-                                // (e o verificare pt response mai jos)
                                 try {
                                     if (ATLRepository.login(userName, password)) {
                                         showMessage(Alert.AlertType.CONFIRMATION);
