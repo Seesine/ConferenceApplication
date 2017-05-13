@@ -1,5 +1,17 @@
 package repository;
 
+
+import model.Conference;
+import org.hibernate.SessionFactory;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -8,22 +20,8 @@ import java.sql.ResultSet;
 /**
  * Created by Cosmin on 4/4/2017.
  */
-public class CMRepository implements CRUDRepository
+public class CMRepository
 {
-    private Connection dbConnection;
-    public CMRepository(Connection connection) {
-        this.dbConnection = connection;
-    }
-    public boolean login(String user, String password) throws SQLException {
-        PreparedStatement preparedStatement = this.dbConnection.prepareStatement(
-                "select * from `cm` where username=? and password=?");
-        preparedStatement.setString(1, user);
-        preparedStatement.setString(2, password);
-        ResultSet resultSet = preparedStatement.executeQuery();
 
-        // exista input-uri cu username si password
-        if (resultSet.next())
-            return true;
-        else return false;
-    }
+
 }
