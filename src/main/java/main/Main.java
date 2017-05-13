@@ -59,6 +59,7 @@ public class Main extends Application
 
     public void start(Stage primaryStage)
     {
+        //sdfdsdfds
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loader2 = new FXMLLoader();
