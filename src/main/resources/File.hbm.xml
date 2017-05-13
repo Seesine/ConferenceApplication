@@ -16,5 +16,6 @@
         <property name="filedoc" column="filedoc" type="string"/>
         <property name="level" column="cmaccept" type="utils.AcceptLevel"/>
         <property name="idC" column="idconf" type="int"/>
+        <property name="reviewCount" column="reviewCount" type="int"/>
     </class>
 </hibernate-mapping>
