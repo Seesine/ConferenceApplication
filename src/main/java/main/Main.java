@@ -110,8 +110,8 @@ public class Main extends Application
             loader2.setLocation(fxmlUrl);
 
 
-            ReviewerControl controlMain = new ReviewerControl(this);
-            loader2.setController(controlMain);
+            controlReviewer = new ReviewerControl(this);
+            loader2.setController(controlReviewer);
             rootLayout2 = loader2.load();
             scene2 = new Scene(rootLayout2);
         }
