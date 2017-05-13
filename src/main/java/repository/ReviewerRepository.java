@@ -52,7 +52,10 @@ public class ReviewerRepository implements CRUDRepository{
         }
     }
     public boolean login(String username, String password){
-
-        return true;
+        for(int i = 0; i < reviewerList.size(); i++){
+            if(reviewerList.get(i).getUsername().equals(username) && reviewerList.get(i).getPassword().equals(password))
+                return true;
+        }
+        return false;
     }
 }
