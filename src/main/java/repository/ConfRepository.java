@@ -65,4 +65,6 @@ public class ConfRepository {
     public List<Conference> getAll(){
         return conferences;
     }
+
+    
 }
