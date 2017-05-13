@@ -15,5 +15,7 @@
 
         <mapping resource="Comitee.hbm.xml"/>
         <mapping resource="File.hbm.xml"/>
+        <mapping resource="Conference.hbm.xml"/>
+        <mapping resource="Section.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import database.Database;
+import model.Attendant;
 import org.hibernate.SessionFactory;
 import repository.*;
 
@@ -44,6 +45,12 @@ public class Main extends Application
     private Scene scene5;
     private Scene scene6;
     private LoginControl controlLogin;
+    private ComiteeControl controlComitee;
+    private ReviewerControl controlReviewer;
+    private AttendantControl controlAttendant;
+    private AuthorControl controlAuthor;
+    private AdminControl controlAdmin;
+
 
     private CMRepository CMLRepository;
     private AttendantRepository ATLRepository;
@@ -85,7 +92,7 @@ public class Main extends Application
             URL fxmlUrl = new File(pathToFxml).toURI().toURL();
             loader.setLocation(fxmlUrl);
 
-            LoginControl controlLogin = new LoginControl(CMLRepository,ATLRepository,AULRepository,RVWRepo,ADRepo);
+            controlLogin = new LoginControl(CMLRepository,ATLRepository,AULRepository,RVWRepo,ADRepo);
             loader.setController(controlLogin);
             rootLayout1 = loader.load();
             scene1 = new Scene(rootLayout1);
@@ -121,7 +128,7 @@ public class Main extends Application
             loader3.setLocation(fxmlUrl);
 
 
-            ComiteeControl controlComitee = new ComiteeControl(this);
+            controlComitee = new ComiteeControl(this);
             loader3.setController(controlComitee);
             rootLayout3 = loader3.load();
             scene3 = new Scene(rootLayout3);
@@ -138,7 +145,7 @@ public class Main extends Application
             loader4.setLocation(fxmlUrl);
 
 
-            AuthorControl controlAuthor = new AuthorControl(this);
+            controlAuthor = new AuthorControl(this);
             loader4.setController(controlAuthor);
             rootLayout4 = loader4.load();
             scene4 = new Scene(rootLayout4);
@@ -156,7 +163,7 @@ public class Main extends Application
             loader5.setLocation(fxmlUrl);
 
 
-            AdminControl controlAdmin = new AdminControl(this);
+            controlAdmin = new AdminControl(this);
             loader5.setController(controlAdmin);
             rootLayout5 = loader5.load();
             scene5 = new Scene(rootLayout5);
@@ -174,7 +181,7 @@ public class Main extends Application
             loader6.setLocation(fxmlUrl);
 
 
-            AttendantControl controlAttendant = new AttendantControl(this);
+            controlAttendant = new AttendantControl(this);
             loader6.setController(controlAttendant);
             rootLayout6 = loader6.load();
             scene6 = new Scene(rootLayout6);

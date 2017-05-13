@@ -19,6 +19,8 @@ public class Sections {
                 '}';
     }
 
+    public Sections() {}
+
     public int getIdSection() {
         return idSection;
     }
@@ -54,6 +56,13 @@ public class Sections {
     public Sections(int idSection, int idConference, int sesChair, String name) {
 
         this.idSection = idSection;
+        this.idConference = idConference;
+        this.sesChair = sesChair;
+        this.name = name;
+    }
+
+    public Sections(int idConference, int sesChair, String name) {
+
         this.idConference = idConference;
         this.sesChair = sesChair;
         this.name = name;
