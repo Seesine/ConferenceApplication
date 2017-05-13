@@ -1,30 +1,26 @@
 package repository;
 
 import model.Conference;
-import org.hibernate.SessionFactory;
+import model.Sections;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * Created by stefanvacareanu on 13/05/2017.
  */
-public class ConfRepository {
+public class SectionRepository {
     private static SessionFactory factory;
-    private List<Conference> conferences = new ArrayList<Conference>();
+    private List<Sections> sections = new ArrayList<Sections>();
 
 
-    public ConfRepository()
+    public SectionRepository()
     {
         try
         {
@@ -40,14 +36,14 @@ public class ConfRepository {
         try
         {
             tx = session.beginTransaction();
-            conferences = session.createQuery("FROM Conference").list();
-            for (Iterator iterator = conferences.iterator(); iterator.hasNext();)
+            sections = session.createQuery("FROM Sections ").list();
+            for (Iterator iterator = sections.iterator(); iterator.hasNext();)
             {
-                Conference f = (Conference) iterator.next();
+                Sections f = (Sections) iterator.next();
+                System.out.print("IdSection: " + f.getIdSection());
                 System.out.print("IdConference: " + f.getIdConference());
-                System.out.print("noParticipants: " + f.getNoParticipants());
                 System.out.println("Name: " + f.getName());
-                System.out.println("Deadline: " + f.getDeadline());
+                System.out.println("SesChair: " + f.getSesChair());
             }
             tx.commit();
         }
@@ -62,18 +58,18 @@ public class ConfRepository {
         }
     }
 
-    public List<Conference> getAll(){
-        return conferences;
+    public List<Sections> getAll(){
+        return sections;
     }
 
-    public Integer addConference(int noPart, String name, String deadline){
+    public Integer addSection(int idConf,int sesC, String name){
         Session session = factory.openSession();
         Transaction tx = null;
-        Integer ConfID = null;
+        Integer SectionID = null;
         try{
             tx = session.beginTransaction();
-            Conference c = new Conference(name,noPart, deadline);
-            ConfID = (Integer) session.save(c);
+            Sections s = new Sections(idConf,sesC,name);
+            SectionID = (Integer) session.save(s);
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
@@ -81,20 +77,19 @@ public class ConfRepository {
         }finally {
             session.close();
         }
-        return ConfID;
+        return SectionID;
     }
 
-    public void updateConference(Integer ConfID, int noPart, String name, String deadline ){
+    public void updateSection(Integer SectionID, int sesC, String name ){
         Session session = factory.openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            Conference c =
-                    (Conference)session.get(Conference.class, ConfID);
-            c.setNoParticipants(noPart);
-            c.setName(name);
-            c.setDeadline(deadline);
-            session.update(c);
+            Sections s =
+                    (Sections)session.get(Sections.class, SectionID);
+            s.setName(name);
+            s.setSesChair(sesC);
+            session.update(s);
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
@@ -104,14 +99,14 @@ public class ConfRepository {
         }
     }
     /* Method to DELETE an employee from the records */
-    public void deleteConference(Integer ConfID){
+    public void deleteSection(Integer SectionID){
         Session session = factory.openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            Conference c =
-                    (Conference)session.get(Conference.class, ConfID);
-            session.delete(c);
+            Sections s =
+                    (Sections)session.get(Sections.class, SectionID);
+            session.delete(s);
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
