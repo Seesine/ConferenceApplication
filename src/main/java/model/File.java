@@ -19,6 +19,9 @@ public class File {
         this.level = level;
     }
 
+    public File() {
+    }
+
     public int getIdF() {
         return idF;
     }

@@ -2,6 +2,9 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
+import model.File;
+import repository.FileRepository;
 import repository.ReviewerRepository;
 import utils.AcceptLevel;
 
@@ -10,12 +13,19 @@ import utils.AcceptLevel;
  */
 public class ReviewerControl {
     private ReviewerRepository reviewRepo;
+    private FileRepository fileRepo;
     @FXML
     ComboBox<AcceptLevel> acceptCB = new ComboBox<>();
-
+    @FXML
+    private TableView<File> fileTable;
     public ReviewerControl(){
     }
     public void initData(){
+        fileTable.getItems().clear();
+
+        for(File f : fileRepo.getAll())
+            fileTable.getItems().add(f);
+
         acceptCB.getItems().addAll(AcceptLevel.values());
     }
 }

@@ -19,4 +19,8 @@ public class FileRepository {
     public void save(File f){
         fileList.add(f);
     }
+
+    public List<File> getAll(){
+        return fileList;
+    }
 }

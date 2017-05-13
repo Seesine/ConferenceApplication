@@ -4,15 +4,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <AnchorPane prefHeight="449.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReviewerControl">
    <children>
       <TableView fx:id="files" prefHeight="449.0" prefWidth="417.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Topic" />
-          <TableColumn prefWidth="75.0" text="Keywords" />
-            <TableColumn prefWidth="75.0" text="FileDoc" />
-            <TableColumn prefWidth="100.0" text="CurrentAccept" />
-            <TableColumn prefWidth="92.0" text="No. of Reviews" />
+          <TableColumn fx:id="topicC" prefWidth="75.0" text="Topic">
+            <cellValueFactory><PropertyValueFactory property="topic" />
+            </cellValueFactory>
+          </TableColumn>
+          <TableColumn fx:id="keyC" prefWidth="75.0" text="Keywords" />
+            <TableColumn fx:id="docC" prefWidth="75.0" text="FileDoc" />
+            <TableColumn fx:id="acceptC" prefWidth="100.0" text="CurrentAccept" />
+            <TableColumn fx:id="norC" prefWidth="92.0" text="No. of Reviews" />
         </columns>
       </TableView>
       <ComboBox fx:id="acceptCB" layoutX="439.0" layoutY="273.0" prefWidth="150.0" />
