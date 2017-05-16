@@ -4,6 +4,7 @@ package model;
  * Created by Cosmin on 5/13/2017.
  */
 public class Admin {
+    public Admin() {}
     public Admin(int id, String username, String password) {
         this.id = id;
         this.username = username;
