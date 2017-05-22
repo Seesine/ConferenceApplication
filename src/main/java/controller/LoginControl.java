@@ -23,8 +23,7 @@ import java.util.ResourceBundle;
  */
 public class LoginControl implements Initializable {
 
-    @FXML
-    private TextField userField;
+    @FXML private TextField userField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
     @FXML private RadioButton cmRadio, reviewRadio;
