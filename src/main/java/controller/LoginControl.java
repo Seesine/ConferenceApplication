@@ -139,6 +139,7 @@ public class LoginControl implements Initializable {
         });
     }
 
+    @FXML
     public void setOnRegister(String username, String password)
     {
         try {
