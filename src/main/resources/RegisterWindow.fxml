@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="267.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RegisterWindow">
+<AnchorPane prefHeight="267.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="confirmButton" layoutX="165.0" layoutY="180.0" mnemonicParsing="false" onAction="#setOnConfirm" text="Confirm" />
       <PasswordField fx:id="repeatpassField" layoutX="165.0" layoutY="137.0" />

@@ -49,6 +49,7 @@ public class LoginControl implements Initializable {
         this.AULRepository = atuloginrep;
         this.RVWRepo = RVWRepo;
         this.ADRepo = ADRepo;
+        this.secondStage = new Stage();
     }
 
     public void initialize(URL location, ResourceBundle resources)
@@ -58,7 +59,6 @@ public class LoginControl implements Initializable {
 
         this.group = new ToggleGroup();
 
-        this.secondStage = secondStage;
 
         cmRadio.setToggleGroup(group);
         cmRadio.setSelected(true);
@@ -140,7 +140,7 @@ public class LoginControl implements Initializable {
     }
 
     @FXML
-    public void setOnRegister(String username, String password)
+    public void setOnRegister()
     {
         try {
             FXMLLoader loader = new FXMLLoader();

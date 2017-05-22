@@ -4,14 +4,12 @@ import controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import database.Database;
-import model.Attendant;
 import org.hibernate.SessionFactory;
 import repository.*;
+import javafx.event.ActionEvent;
 
 import java.io.File;
 import java.io.IOException;
