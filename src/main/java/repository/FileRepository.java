@@ -65,4 +65,12 @@ public class FileRepository {
     public List<File> getAll(){
         return fileList;
     }
+
+    public File getById(int id){
+        for(int i = 0 ; i < fileList.size(); i++){
+            if(fileList.get(i).getIdF() == id)
+                return fileList.get(i);
+        }
+        return null;
+    }
 }

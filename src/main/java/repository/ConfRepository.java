@@ -47,7 +47,7 @@ public class ConfRepository {
                 System.out.print("IdConference: " + f.getIdConference());
                 System.out.print("noParticipants: " + f.getNoParticipants());
                 System.out.println("Name: " + f.getName());
-                System.out.println("Deadline: " + f.getDeadline());
+                //System.out.println("Deadline: " + f.getDeadline());
             }
             tx.commit();
         }
@@ -93,7 +93,7 @@ public class ConfRepository {
                     (Conference)session.get(Conference.class, ConfID);
             c.setNoParticipants(noPart);
             c.setName(name);
-            c.setDeadline(deadline);
+            //c.setDeadline(deadline);
             session.update(c);
             tx.commit();
         }catch (HibernateException e) {

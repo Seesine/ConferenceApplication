@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by Dragos on 5/13/2017.
  */
-public class Author
+public class Author implements Serializable
 {
 
     private int ida;

@@ -14,9 +14,9 @@
         <property name="keywords" column="keywords" type="string"/>
         <property name="topic" column="topic" type="string"/>
         <property name="filedoc" column="filedoc" type="string"/>
-        <property name="level" column="cmaccept" type="utils.AcceptLevel"/>
+        <property name="level" column="cmaccept" type="string"/>
         <property name="idses" column="idses" type="int"/>
         <property name="reviewCount" column="reviewerCount" type="int"/>
-        <property name="abstractData" column="abstractData" type="int"/>
+        <property name="abstractData" column="abstractData" type="string"/>
     </class>
 </hibernate-mapping>
