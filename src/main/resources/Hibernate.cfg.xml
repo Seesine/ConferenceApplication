@@ -19,5 +19,6 @@
         <mapping resource="Author.hbm.xml"/>
         <mapping resource="Admin.hbm.xml"/>
         <mapping resource="Attendant.hbm.xml"/>
+        <mapping resource="DefaultUser.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

@@ -6,9 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="logoutButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#setLogoutAction" text="Logout" />
+      <Button fx:id="logoutButton" layoutX="532.0" layoutY="361.0" mnemonicParsing="false" onAction="#setLogoutAction" text="Logout" />
+      <Label layoutX="52.0" layoutY="14.0" text="Register users" />
+      <ComboBox fx:id="usersComboBox" layoutX="14.0" layoutY="43.0" prefWidth="150.0" promptText="Select an user..." />
+      <ComboBox fx:id="accessComboBox" layoutX="14.0" layoutY="78.0" prefWidth="150.0" promptText="Select the access..." />
+      <Button fx:id="registerButton" layoutX="14.0" layoutY="185.0" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="25.0" prefWidth="66.0" text="Register" />
+      <Button fx:id="deleteButton" layoutX="99.0" layoutY="185.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="25.0" prefWidth="66.0" text="Delete" />
+      <ComboBox fx:id="infoComboBox" layoutX="15.0" layoutY="114.0" prefWidth="150.0" promptText="Optional Info..." />
+      <TextField fx:id="infoTextField" layoutX="16.0" layoutY="147.0" />
    </children>
 </AnchorPane>
