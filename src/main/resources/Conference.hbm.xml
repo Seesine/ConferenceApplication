@@ -13,6 +13,7 @@
         </id>
         <property name="noParticipants" column="noparticipants" type="int"/>
         <property name="name" column="name" type="string"/>
-        <property name="deadline" column="deadline" type="string"/>
+        <property name="deadlineProposal" column="deadlineProposal" type="string"/>
+        <property name="deadlineAbstract" column="deadlineAbstract" type="string"/>
     </class>
 </hibernate-mapping>

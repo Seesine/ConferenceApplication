@@ -7,32 +7,42 @@ import java.util.Date;
  */
 public class Conference
 {
-    int idConference;
-    String name;
-    int noParticipants;
-    String deadline;
+    private int idConference;
+    private String name;
+    private int noParticipants;
+    private String deadlineProposal;
+    private String deadlineAbstract;
 
 
-    public String getDeadline() {
-        return deadline;
+    public String getDeadlineProposal() {
+        return deadlineProposal;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+    public void setDeadlineProposal(String deadlineProposal) {
+        this.deadlineProposal = deadlineProposal;
     }
 
-    public Conference(int idConference, String name, int noParticipants, String deadline) {
+    public String getDeadlineAbstract() {
+        return deadlineAbstract;
+    }
+
+    public void setDeadlineAbstract(String deadlineAbstract) {
+        this.deadlineAbstract = deadlineAbstract;
+    }
+
+    public Conference(int idConference, String name, int noParticipants, String deadlineProposal) {
         this.idConference = idConference;
         this.name = name;
         this.noParticipants = noParticipants;
-        this.deadline = deadline;
+        this.deadlineProposal = deadlineProposal;
+        this.deadlineAbstract = deadlineAbstract;
 
     }
 
-    public Conference(String name, int noParticipants, String deadline) {
+    public Conference(String name, int noParticipants, String deadlineProposal) {
         this.name = name;
         this.noParticipants = noParticipants;
-        this.deadline = deadline;
+        this.deadlineProposal = deadlineProposal;
 
     }
 
@@ -44,7 +54,8 @@ public class Conference
                 "idConference=" + idConference +
                 ", name='" + name + '\'' +
                 ", noParticipants=" + noParticipants +
-                ", deadline=" + deadline +
+                ", deadlineProposal=" + deadlineProposal +
+                ", deadlineAbstract=" + deadlineAbstract +
                 '}';
     }
 

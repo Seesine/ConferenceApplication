@@ -10,7 +10,6 @@
         <property name="hibernate.connection.password"/>
 
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-
         <property name="current_session_context_class">thread</property>
 
         <mapping resource="Comitee.hbm.xml"/>

@@ -96,6 +96,20 @@ public class AuthorsRepository implements CRUDRepository
         return sections;
     }
 
+    public List<Sections> findByConfId(int idC)
+    {
+        ArrayList<Sections> rez = new ArrayList<Sections>();
+        sections.forEach(sect->{if (sect.getIdConference() == idC) {rez.add(sect);}});
+        return rez;
+    }
+
+    public List<Sections> returnDeadline(int idC)
+    {
+        ArrayList<Sections> rez = new ArrayList<Sections>();
+        sections.forEach(sect->{if (sect.getIdConference() == idC) {rez.add(sect);}});
+        return rez;
+    }
+
     public boolean login(String username,String password)
     {
         Author rez = null;
