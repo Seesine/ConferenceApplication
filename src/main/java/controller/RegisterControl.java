@@ -70,7 +70,6 @@ public class RegisterControl
                     preparedStmt.setString (1, userName);
                     preparedStmt.setString (2, password);
                     preparedStmt.execute();
-                    connection.close();
                 }
                 catch (SQLException ex)
                 {
