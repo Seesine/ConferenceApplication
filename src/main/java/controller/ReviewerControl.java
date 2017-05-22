@@ -24,7 +24,7 @@ import java.net.URISyntaxException;
  */
 public class ReviewerControl {
     private ReviewerRepository reviewRepo;
-    private FileRepository fileRepo;
+    private FileRepository fileRepo = new FileRepository();
     @FXML
     ComboBox<AcceptLevel> acceptCB = new ComboBox<>();
     @FXML
@@ -39,7 +39,7 @@ public class ReviewerControl {
     @FXML
     private Button reviewButton;
     @FXML
-    private Button openFileBtn;
+    private Button openFileBtn = new Button();
     public ObservableList<File> fileList = FXCollections.observableArrayList();
     final Main loginManager;
 
@@ -57,9 +57,9 @@ public class ReviewerControl {
         for(File f : fileRepo.getAll()) {
             fileList.add(f);
         }
-        //asdf deletegfhg
         fileTable.setItems(fileList);
         acceptCB.getItems().addAll(AcceptLevel.values());
+
         openFileBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 try {
@@ -75,27 +75,80 @@ public class ReviewerControl {
                 }
             }
         });
+
+        reviewButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try{
+                    int reviewCount = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
+                    int id = fileTable.getSelectionModel().getSelectedItem().getIdF();
+                    if(reviewCount < 4){
+                        String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
+                        int currentLevelNo = mapLevelToInt(currentLevel);
+                        int selectedLevelNo = mapLevelToInt(acceptCB.getSelectionModel().getSelectedItem().toString());
+                        int average;
+                        if(reviewCount == 0)
+                            average = selectedLevelNo;
+                        else
+                            average = (currentLevelNo + selectedLevelNo)/(reviewCount+1);
+                        String averageLevel = mapIntToLevel(average);
+                        fileRepo.getById(id).setLevel(averageLevel);
+                        fileRepo.getById(id).setReviewCount(++reviewCount);
+                        int temp = 0;
+                        //initData();
+                        fileTable.getColumns().get(0).setVisible(false);
+                        fileTable.getColumns().get(0).setVisible(true);
+                    }
+                    else
+                        showErrorMessage("Too many reviewers already");
+                }catch(Exception ex){
+                    showErrorMessage(ex.toString());
+                }
+            }
+        });
+    }
+
+    private String mapIntToLevel(int average) {
+        if(average == 1)
+            return "StrongAccept";
+        else if(average == 2)
+            return "Accept";
+        else if(average == 3)
+            return "WeakAccept";
+        else if(average == 4)
+            return "Borderline";
+        else if(average == 5)
+            return "WeakReject";
+        else if(average == 6)
+            return "Reject";
+        else if(average == 7)
+            return "StrongReject";
+
+        return null;
+    }
+
+    private int mapLevelToInt(String currentLevel) {
+        if(currentLevel.equals("StrongAccept"))
+            return 1;
+        else if(currentLevel.equals("Accept"))
+            return 2;
+        else if(currentLevel.equals("WeakAccept"))
+            return 3;
+        else if(currentLevel.equals("Borderline"))
+            return 4;
+        else if(currentLevel.equals("WeakReject"))
+            return 5;
+        else if(currentLevel.equals("Reject"))
+            return 6;
+        else if(currentLevel.equals("StrongReject"))
+            return 7;
+        return 0;
+
     }
 
     public void showErrorMessage(String s){
         Alert alert = new Alert(Alert.AlertType.ERROR, s);
         alert.showAndWait();
-    }
-    @FXML
-    private void openLink(ActionEvent event) {
-        String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
-        openFileBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-               try {
-                   Desktop.getDesktop().browse(new URI(website));
-               } catch (IOException e1) {
-                   e1.printStackTrace();
-               } catch (URISyntaxException e1) {
-                   e1.printStackTrace();
-               }
-           }
-       }
-        );
     }
 
     @FXML

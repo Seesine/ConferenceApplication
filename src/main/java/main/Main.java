@@ -113,6 +113,7 @@ public class Main extends Application
             controlReviewer = new ReviewerControl(this,fileRepo);
             loader2.setController(controlReviewer);
             rootLayout2 = loader2.load();
+            controlReviewer.initData();
             scene2 = new Scene(rootLayout2);
         }
 

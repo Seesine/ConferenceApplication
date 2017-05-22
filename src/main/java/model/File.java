@@ -8,12 +8,13 @@ import java.io.Serializable;
  * Created by mikha on 5/13/2017.
  */
 public class File implements Serializable{
+    private String titlu;
     private int idF, idses, reviewCount;
     private String keywords, topic, filedoc;
     private String level;
     private String abstractData;
 
-    public File(int idF, String keywords, String topic, String filedoc, String level, int idses, int reviewCount, String abstractData) {
+    public File(int idF, String keywords, String topic, String filedoc, String level, int idses, int reviewCount, String abstractData,String titlu) {
         this.idF = idF;
         this.idses = idses;
         this.keywords = keywords;
@@ -22,9 +23,18 @@ public class File implements Serializable{
         this.level = level;
         this.reviewCount = reviewCount;
         this.abstractData = abstractData;
+        this.titlu = titlu;
     }
 
     public File() {
+    }
+
+    public String getTitlu() {
+        return titlu;
+    }
+
+    public void setTitlu(String titlu) {
+        this.titlu = titlu;
     }
 
     public int getIdF() {
@@ -91,5 +101,10 @@ public class File implements Serializable{
 
     public void setLevel(String level) {
         this.level = level;
+    }
+    @Override
+    public String toString(){
+        return idF + " " + idses + " " + keywords + " " + topic + " " +filedoc + " " + level + " " + reviewCount;
+
     }
 }

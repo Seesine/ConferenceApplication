@@ -18,5 +18,6 @@
         <property name="idses" column="idses" type="int"/>
         <property name="reviewCount" column="reviewerCount" type="int"/>
         <property name="abstractData" column="abstractData" type="string"/>
+        <property name="titlu" column="titlu" type="string"/>
     </class>
 </hibernate-mapping>

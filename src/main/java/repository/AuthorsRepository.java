@@ -1,14 +1,9 @@
 package repository;
 
-import model.Author;
-import model.Conference;
-import model.File;
-import model.Sections;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import model.*;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,14 +19,6 @@ import java.util.List;
 public class AuthorsRepository implements CRUDRepository
 {
     private static SessionFactory factory;
-    //Lista de autori
-    private List<Author> authors = new ArrayList<Author>();
-    //Lista de fisiere
-    private List<File> files = new ArrayList<File>();
-    //Lista de sesiuni
-    private List<Conference> confes = new ArrayList<Conference>();
-    //Lista de sectiuni
-    private List<Sections> sections = new ArrayList<Sections>();
 
     @SuppressWarnings("unchecked")
     public AuthorsRepository()
@@ -49,21 +36,6 @@ public class AuthorsRepository implements CRUDRepository
         Transaction tx = null;
         try
         {
-            tx = session.beginTransaction();
-            authors = session.createQuery("FROM Author").list();
-            tx.commit();
-            tx = null;
-            tx = session.beginTransaction();
-            sections = session.createQuery("FROM Sections ").list();
-            tx.commit();
-            tx = null;
-            tx = session.beginTransaction();
-            files = session.createQuery("FROM File").list();
-            tx.commit();
-            tx = null;
-            tx = session.beginTransaction();
-            confes = session.createQuery("FROM Conference ").list();
-            tx.commit();
 
         }
         catch (HibernateException e)
@@ -79,40 +51,118 @@ public class AuthorsRepository implements CRUDRepository
 
     public List<Author> getAllAuthor()
     {
-        return authors;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        List<Author> sectList = new ArrayList<Author>();
+        try {
+            tx = session.beginTransaction();
+            org.hibernate.query.Query query = session.createQuery("FROM Author");
+            sectList = query.list();
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return sectList;
+        }
     }
 
     public List<File> getAllFiles()
     {
-        return files;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        List<File> sectList = new ArrayList<File>();
+        try {
+            tx = session.beginTransaction();
+            org.hibernate.query.Query query = session.createQuery("FROM File");
+            sectList = query.list();
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return sectList;
+        }
     }
 
     public List<Conference> getAllConferences()
     {
-        return confes;
-    }
+        Session session = factory.openSession();
+        Transaction tx = null;
+        List<Conference> sectList = new ArrayList<Conference>();
+        try {
+            tx = session.beginTransaction();
+            org.hibernate.query.Query query = session.createQuery("FROM Sections");
+            sectList = query.list();
 
-    public List<Sections> getAllSections()
-    {
-        return sections;
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return sectList;
+        }
     }
 
     public List<Sections> findByConfId(int idC)
     {
-        ArrayList<Sections> rez = new ArrayList<Sections>();
-        sections.forEach(sect->{if (sect.getIdConference() == idC) {rez.add(sect);}});
-        return rez;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        List<Sections> sectList = new ArrayList<Sections>();
+        try {
+            tx = session.beginTransaction();
+            org.hibernate.query.Query query = session.createQuery("FROM Sections where idConference = :idConference");
+            query.setParameter("idConference", idC);
+            sectList = query.list();
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return sectList;
+        }
     }
 
     public List<String> returnDeadline(int idC)
     {
-        ArrayList<String> rez = new ArrayList<String>();
-        confes.forEach(cnf->{if (cnf.getIdConference() == idC) {rez.add(cnf.getDeadlineAbstract()); rez.add(cnf.getDeadlineProposal());}});
-        return rez;
+        Session session = factory.openSession();
+        Transaction tx = null;
+        List<Conference> sectList;
+        Conference conf = null;
+        List<String> deadlineList = new ArrayList<>();
+        try {
+            tx = session.beginTransaction();
+            org.hibernate.query.Query query = session.createQuery("FROM Conference where idConference = :idConference");
+            query.setParameter("idConference", idC);
+            sectList = query.list();
+
+            conf = sectList.get(0);;
+            if (conf!= null)
+            {
+                deadlineList.add(conf.getDeadlineProposal());
+                deadlineList.add(conf.getDeadlineAbstract());
+            }
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return deadlineList;
+        }
     }
 
     public boolean login(String username,String password)
     {
+        List<Author> authors = getAllAuthor();
         Author rez = null;
         for(Author aut : authors)
             if(aut.getUsername().equals(username) && aut.getPassword().compareTo(password) == 0)
