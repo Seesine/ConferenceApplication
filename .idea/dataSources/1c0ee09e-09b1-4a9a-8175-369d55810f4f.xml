@@ -6,12 +6,12 @@
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
-    <schema id="3" parent="1" name="flights"/>
-    <schema id="4" parent="1" name="information_schema"/>
-    <schema id="5" parent="1" name="mysql"/>
-    <schema id="6" parent="1" name="performance_schema"/>
-    <schema id="7" parent="1" name="phpmyadmin"/>
-    <schema id="8" parent="1" name="test"/>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="phpmyadmin"/>
+    <schema id="7" parent="1" name="test"/>
+    <schema id="8" parent="1" name="concurs"/>
     <table id="9" parent="2" name="accept"/>
     <table id="10" parent="2" name="admin"/>
     <table id="11" parent="2" name="attendant"/>
