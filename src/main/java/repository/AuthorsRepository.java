@@ -5,10 +5,7 @@ import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -19,10 +16,29 @@ import java.util.List;
 public class AuthorsRepository implements CRUDRepository
 {
     private static SessionFactory factory;
-
+    private Statement statement;
+    private Connection connection;
+    private int idforfile = 0;
+    private List<Integer> fls = new ArrayList<Integer>();
     @SuppressWarnings("unchecked")
     public AuthorsRepository()
     {
+        String url = "jdbc:mysql://localhost:3306/cms";
+        String user = "root";
+        String password = "";
+        try
+        {
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            connection = DriverManager.getConnection(url, user, password);
+
+            statement = connection.createStatement();
+            statement.execute("USE cms");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         try
         {
             this.factory = new Configuration().configure().buildSessionFactory();
@@ -71,22 +87,46 @@ public class AuthorsRepository implements CRUDRepository
 
     public List<File> getAllFiles()
     {
-        Session session = factory.openSession();
-        Transaction tx = null;
         List<File> sectList = new ArrayList<File>();
         try {
-            tx = session.beginTransaction();
-            org.hibernate.query.Query query = session.createQuery("FROM File");
-            sectList = query.list();
-
-            tx.commit();
-        } catch (HibernateException e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-            return sectList;
+            String query = "SELECT * FROM legaf WHERE ida = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setInt(1, idforfile);
+            ResultSet result = preparedStmt.executeQuery();
+            while (result.next())
+            {
+                fls.add(result.getInt("idf"));
+            }
         }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        System.out.println(fls);
+
+        for (Integer idrez : fls)
+        {
+            List<File> rzm = new ArrayList<File>();
+            Session session = factory.openSession();
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                org.hibernate.query.Query query = session.createQuery("FROM File WHERE idF = :idF");
+                query.setParameter("idF", idrez);
+                rzm = query.list();
+                sectList.add(rzm.get(0));
+                tx.commit();
+                return sectList;
+            } catch (HibernateException e) {
+                if (tx != null) tx.rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
+
+            }
+        }
+        return sectList;
     }
 
     public List<Conference> getAllConferences()
@@ -166,9 +206,14 @@ public class AuthorsRepository implements CRUDRepository
         Author rez = null;
         for(Author aut : authors)
             if(aut.getUsername().equals(username) && aut.getPassword().compareTo(password) == 0)
+            {
                 rez = aut;
-        if (rez!=null)
+            }
+
+        if (rez!=null) {
+            this.idforfile = rez.getIda();
             return true;
+        }
         else
             return false;
     }
