@@ -71,7 +71,7 @@ public class Main extends Application
         Database dtb = new Database();
         SessionFactory factory = dtb.getConnection();
         CMRepository CMLRepository = new CMRepository();
-        AttendantRepository ATLRepository = new AttendantRepository();
+        AttendantRepository ATLRepository = new AttendantRepository(factory);
         AuthorsRepository AULRepository = new AuthorsRepository();
         ReviewerRepository RVWRepo = new ReviewerRepository();
         AdminRepository ADRepo = new AdminRepository(factory);

@@ -19,5 +19,6 @@
         <mapping resource="Section.hbm.xml"/>
         <mapping resource="Author.hbm.xml"/>
         <mapping resource="Admin.hbm.xml"/>
+        <mapping resource="Attendant.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

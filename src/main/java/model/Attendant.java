@@ -4,19 +4,19 @@ package model;
  * Created by Cosmin on 5/13/2017...
  */
 public class Attendant {
-
-    public Attendant(int id, String username, String password) {
-        this.id = id;
+    public Attendant() {};
+    public Attendant(int idat, String username, String password) {
+        this.idat = idat;
         this.username = username;
         this.password = password;
     }
 
-    public int getId() {
-        return id;
+    public int getIdat() {
+        return idat;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdat(int idat) {
+        this.idat = idat;
     }
 
     public String getUsername() {
@@ -35,7 +35,7 @@ public class Attendant {
         this.password = password;
     }
 
-    private int id;
+    private int idat;
     private String username;
     private String password;
 }
