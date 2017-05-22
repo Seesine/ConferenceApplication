@@ -102,9 +102,6 @@ public class AuthorsRepository implements CRUDRepository
         {
             ex.printStackTrace();
         }
-
-        System.out.println(fls);
-
         for (Integer idrez : fls)
         {
             List<File> rzm = new ArrayList<File>();
@@ -117,7 +114,6 @@ public class AuthorsRepository implements CRUDRepository
                 rzm = query.list();
                 sectList.add(rzm.get(0));
                 tx.commit();
-                return sectList;
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
                 e.printStackTrace();
