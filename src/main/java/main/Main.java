@@ -184,6 +184,7 @@ public class Main extends Application
             controlAttendant = new AttendantControl(this);
             loader6.setController(controlAttendant);
             rootLayout6 = loader6.load();
+            controlAttendant.initialize();
             scene6 = new Scene(rootLayout6);
         }
 
