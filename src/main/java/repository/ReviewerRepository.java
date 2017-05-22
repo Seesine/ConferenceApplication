@@ -41,7 +41,7 @@ public class ReviewerRepository implements CRUDRepository{
             reviewerList = session.createQuery("FROM CM").list();
             for (Iterator iterator = reviewerList.iterator(); iterator.hasNext(); ) {
                 CM c = (CM) iterator.next();
-                System.out.print("Id: " + c.getId());
+                //System.out.print("Id: " + c.getId());
             }
             tx.commit();
         } catch (HibernateException e) {
