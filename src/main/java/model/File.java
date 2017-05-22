@@ -92,4 +92,9 @@ public class File implements Serializable{
     public void setLevel(String level) {
         this.level = level;
     }
+    @Override
+    public String toString(){
+        return idF + " " + idses + " " + keywords + " " + topic + " " +filedoc + " " + level + " " + reviewCount;
+
+    }
 }
