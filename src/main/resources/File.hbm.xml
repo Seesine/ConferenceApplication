@@ -15,7 +15,8 @@
         <property name="topic" column="topic" type="string"/>
         <property name="filedoc" column="filedoc" type="string"/>
         <property name="level" column="cmaccept" type="utils.AcceptLevel"/>
-        <property name="idC" column="idconf" type="int"/>
+        <property name="idses" column="idses" type="int"/>
         <property name="reviewCount" column="reviewerCount" type="int"/>
+        <property name="abstractData" column="abstractData" type="int"/>
     </class>
 </hibernate-mapping>

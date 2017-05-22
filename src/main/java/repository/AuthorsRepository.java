@@ -103,10 +103,10 @@ public class AuthorsRepository implements CRUDRepository
         return rez;
     }
 
-    public List<Sections> returnDeadline(int idC)
+    public List<String> returnDeadline(int idC)
     {
-        ArrayList<Sections> rez = new ArrayList<Sections>();
-        sections.forEach(sect->{if (sect.getIdConference() == idC) {rez.add(sect);}});
+        ArrayList<String> rez = new ArrayList<String>();
+        confes.forEach(cnf->{if (cnf.getIdConference() == idC) {rez.add(cnf.getDeadlineAbstract()); rez.add(cnf.getDeadlineProposal());}});
         return rez;
     }
 

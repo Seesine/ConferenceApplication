@@ -6,18 +6,20 @@ import utils.AcceptLevel;
  * Created by mikha on 5/13/2017.
  */
 public class File {
-    private int idF, idC, reviewCount;
+    private int idF, idses, reviewCount;
     private String keywords, topic, filedoc;
     private AcceptLevel level;
+    private String abstractData;
 
-    public File(int idF, String keywords, String topic, String filedoc, AcceptLevel level, int idC, int reviewCount) {
+    public File(int idF, String keywords, String topic, String filedoc, AcceptLevel level, int idses, int reviewCount, String abstractData) {
         this.idF = idF;
-        this.idC = idC;
+        this.idses = idses;
         this.keywords = keywords;
         this.topic = topic;
         this.filedoc = filedoc;
         this.level = level;
         this.reviewCount = reviewCount;
+        this.abstractData = abstractData;
     }
 
     public File() {
@@ -31,12 +33,12 @@ public class File {
         this.idF = idF;
     }
 
-    public int getIdC() {
-        return idC;
+    public int getIdses() {
+        return idses;
     }
 
-    public void setIdC(int idC) {
-        this.idC = idC;
+    public void setIdses(int idC) {
+        this.idses = idses;
     }
 
     public String getKeywords() {
@@ -77,5 +79,13 @@ public class File {
 
     public void setReviewCount(int reviewCount) {
         this.reviewCount = reviewCount;
+    }
+
+    public String getAbstractData() {
+        return abstractData;
+    }
+
+    public void setAbstractData(String abstractData) {
+        this.abstractData = abstractData;
     }
 }
