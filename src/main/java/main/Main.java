@@ -76,6 +76,7 @@ public class Main extends Application
         AttendantRepository ATLRepository = new AttendantRepository(factory);
         AuthorsRepository AULRepository = new AuthorsRepository();
         AdminRepository ADRepo = new AdminRepository(factory);
+        ReviewerRepository RVWRepo = new ReviewerRepository();
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loader2 = new FXMLLoader();
