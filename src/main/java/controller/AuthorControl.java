@@ -1,11 +1,20 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import main.Main;
 import model.File;
+import repository.AuthorsRepository;
+import services.AuthorService;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -13,6 +22,7 @@ import java.util.ResourceBundle;
  */
 public class AuthorControl
 {
+    AuthorsRepository repo;
     final Main loginManager;
     @FXML private ComboBox confCombo;
     @FXML private ComboBox sesCombo;
@@ -25,17 +35,37 @@ public class AuthorControl
     @FXML private TextArea absText;
     @FXML private TableView fileTable;
 
-    @FXML private TableColumn<File, String> titleColumn;
-    @FXML private TableColumn<File, String> linkColumn;
+    @FXML private TableColumn<File, String> titlu;
+    @FXML private TableColumn<File, String> filedoc;
 
-    public AuthorControl(final Main loginManager)
+    private AuthorService service;
+    private ObservableList files;
+    private List<File> lista = new ArrayList<File>();
+
+    public AuthorControl(AuthorsRepository repo,final Main loginManager)
     {
+        this.repo = repo;
         this.loginManager = loginManager;
+
     }
 
-    public void initialize(URL location, ResourceBundle resources)
+    public void initialize()
     {
+        this.service = new AuthorService(this.repo);
+        lista = service.getAllFiles();
+        this.files = FXCollections.observableArrayList(lista);
 
+        files.addListener(new ListChangeListener()
+        {
+            @Override
+            public void onChanged(Change change)
+            {
+
+            }
+        });
+
+
+        fileTable.setItems(files);
     }
 
     @FXML
