@@ -16,10 +16,7 @@ import java.util.List;
  * Created by mikha on 5/13/2017.
  */
 public class FileRepository {
-//    private Connection dbConnection;
-//    public FileRepository(Connection connection) {
-//        this.dbConnection = connection;
-//    }
+
     private static SessionFactory factory;
     List<File> fileList = new ArrayList<>();
 
@@ -42,9 +39,6 @@ public class FileRepository {
             for (Iterator iterator = fileList.iterator(); iterator.hasNext();)
             {
                 File f = (File) iterator.next();
-                System.out.print("Id: " + f.getIdF());
-                //System.out.print("Airport: " + f.getAirport());
-                //System.out.println("Destination: " + f.getDestination());
             }
             tx.commit();
         }

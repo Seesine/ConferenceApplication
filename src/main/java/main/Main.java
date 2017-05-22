@@ -70,12 +70,12 @@ public class Main extends Application
     {
         Database dtb = new Database();
         SessionFactory factory = dtb.getConnection();
+        SectionRepository secRepo = new SectionRepository();
+        FileRepository fileRepo = new FileRepository();
         CMRepository CMLRepository = new CMRepository();
         AttendantRepository ATLRepository = new AttendantRepository(factory);
         AuthorsRepository AULRepository = new AuthorsRepository();
-        ReviewerRepository RVWRepo = new ReviewerRepository();
         AdminRepository ADRepo = new AdminRepository(factory);
-
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loader2 = new FXMLLoader();
@@ -108,7 +108,7 @@ public class Main extends Application
             loader2.setLocation(fxmlUrl);
 
 
-            controlReviewer = new ReviewerControl(this);
+            controlReviewer = new ReviewerControl(this,fileRepo);
             loader2.setController(controlReviewer);
             rootLayout2 = loader2.load();
             scene2 = new Scene(rootLayout2);
