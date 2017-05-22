@@ -132,7 +132,7 @@ public class LoginControl implements Initializable {
 
     public void setOnRegister(String username, String password)
     {
-
+        //
     }
 
     private static void showMessage(Alert.AlertType type)
