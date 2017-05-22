@@ -36,6 +36,7 @@ public class ReviewerRepository implements CRUDRepository{
         }
         Session session = factory.openSession();
         Transaction tx = null;
+        //aa
         try {
             tx = session.beginTransaction();
             reviewerList = session.createQuery("FROM CM").list();
