@@ -52,18 +52,19 @@ public class AuthorsRepository implements CRUDRepository
             tx = session.beginTransaction();
             authors = session.createQuery("FROM Author").list();
             tx.commit();
-
+            tx = null;
+            tx = session.beginTransaction();
+            sections = session.createQuery("FROM Sections ").list();
+            tx.commit();
+            tx = null;
             tx = session.beginTransaction();
             files = session.createQuery("FROM File").list();
             tx.commit();
-
+            tx = null;
             tx = session.beginTransaction();
             confes = session.createQuery("FROM Conference ").list();
             tx.commit();
 
-            tx = session.beginTransaction();
-            sections = session.createQuery("FROM Sections ").list();
-            tx.commit();
         }
         catch (HibernateException e)
         {

@@ -1,6 +1,5 @@
 package repository;
 
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import model.Attendant;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

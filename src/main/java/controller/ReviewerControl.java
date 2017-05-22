@@ -24,7 +24,7 @@ import java.net.URISyntaxException;
  */
 public class ReviewerControl {
     private ReviewerRepository reviewRepo;
-    private FileRepository fileRepo = new FileRepository();
+    private FileRepository fileRepo;
     @FXML
     ComboBox<AcceptLevel> acceptCB = new ComboBox<>();
     @FXML
@@ -43,9 +43,10 @@ public class ReviewerControl {
     public ObservableList<File> fileList = FXCollections.observableArrayList();
     final Main loginManager;
 
-    public ReviewerControl(final Main loginManager)
+    public ReviewerControl(final Main loginManager,FileRepository fileRepo)
     {
         this.loginManager = loginManager;
+        this.fileRepo = fileRepo;
     }
     public void initData(){
         fileTable.getItems().clear();
@@ -79,22 +80,22 @@ public class ReviewerControl {
         Alert alert = new Alert(Alert.AlertType.ERROR, s);
         alert.showAndWait();
     }
-//    @FXML
-//    private void openLink(ActionEvent event) {
-//        String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
-//        openFileBtn.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override public void handle(ActionEvent e) {
-//               try {
-//                   Desktop.getDesktop().browse(new URI(website));
-//               } catch (IOException e1) {
-//                   e1.printStackTrace();
-//               } catch (URISyntaxException e1) {
-//                   e1.printStackTrace();
-//               }
-//           }
-//       }
-//        );
-//    }
+    @FXML
+    private void openLink(ActionEvent event) {
+        String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
+        openFileBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+               try {
+                   Desktop.getDesktop().browse(new URI(website));
+               } catch (IOException e1) {
+                   e1.printStackTrace();
+               } catch (URISyntaxException e1) {
+                   e1.printStackTrace();
+               }
+           }
+       }
+        );
+    }
 
     @FXML
     private void reviewHandle(ActionEvent event){
