@@ -74,6 +74,7 @@ public class RegisterControl
                 catch (SQLException ex)
                 {
                     ex.printStackTrace();
+                    showErrorMessage("User-ul deja exista");
                 }
 
     }
