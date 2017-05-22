@@ -3,11 +3,17 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import main.Main;
 import repository.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -26,6 +32,7 @@ public class LoginControl implements Initializable {
     @FXML private RadioButton authorRadio;
     @FXML private RadioButton adminRadio;
     private ToggleGroup group;
+    private Stage secondStage;
 
     // Logins Repositories
     private CMRepository CMLRepository;
@@ -50,6 +57,8 @@ public class LoginControl implements Initializable {
         userField.setPromptText("Your username");
 
         this.group = new ToggleGroup();
+
+        this.secondStage = secondStage;
 
         cmRadio.setToggleGroup(group);
         cmRadio.setSelected(true);
@@ -132,7 +141,25 @@ public class LoginControl implements Initializable {
 
     public void setOnRegister(String username, String password)
     {
-        //
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            String pathToFxml = "src/main/resources/RegisterWindow.fxml";
+            URL fxmlUrl = new File(pathToFxml).toURI().toURL();
+            loader.setLocation(fxmlUrl);
+
+            RegisterControl registerCont = new RegisterControl();
+            loader.setController(registerCont);
+            AnchorPane rootLayout1;
+            Scene scene1;
+            rootLayout1 = loader.load();
+            scene1 = new Scene(rootLayout1);
+            secondStage.setScene(scene1);
+            secondStage.show();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     private static void showMessage(Alert.AlertType type)
