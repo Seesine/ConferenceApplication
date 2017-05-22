@@ -25,10 +25,10 @@
       <Label layoutX="35.0" layoutY="300.0" />
       <Button layoutX="33.0" layoutY="402.0" mnemonicParsing="false" text="Add author" />
       <Button layoutX="140.0" layoutY="483.0" mnemonicParsing="false" text="Confirm" />
-      <TextField layoutX="138.0" layoutY="439.0" />
       <Label layoutX="36.0" layoutY="444.0" text="Author name:" />
       <TextArea layoutX="144.0" layoutY="295.0" prefHeight="77.0" prefWidth="187.0" />
       <Label layoutX="32.0" layoutY="300.0" prefHeight="21.0" prefWidth="68.0" text="Abstract:" />
       <Button layoutX="568.0" layoutY="506.0" mnemonicParsing="false" onAction="#setLogoutAction" text="Logout" />
+      <ComboBox fx:id="authorBox" layoutX="139.0" layoutY="439.0" prefHeight="31.0" prefWidth="187.0" />
    </children>
 </AnchorPane>
