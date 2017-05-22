@@ -4,11 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="model.Attendant" table="routes">
+    <class name="model.Attendant" table="attendant">
         <meta attribute="class-description">
             Detalii pentru participant.
         </meta>
-        <id name="id" type="int" column="id">
+        <id name="idat" type="int" column="idat">
             <generator class="native"/>
         </id>
         <property name="username" column="username" type="string"/>
