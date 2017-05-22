@@ -17,7 +17,6 @@ public class Database
 
     public Database()
     {
-        //asdf
         try
         {
             this.factory = new Configuration().configure().buildSessionFactory();

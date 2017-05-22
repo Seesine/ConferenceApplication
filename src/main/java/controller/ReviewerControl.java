@@ -101,8 +101,8 @@ public class ReviewerControl {
         String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
         int currentNumber = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
         int selectedFileId = fileTable.getSelectionModel().getSelectedItem().getIdF();
-        File f = fileRepo.getById(selectedFileId);
-        f.setLevel("Accept");
+        //File f = fileRepo.getById(selectedFileId);
+        //f.setLevel("Accept");
         //initData();
     }
 

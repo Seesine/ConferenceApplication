@@ -10,8 +10,8 @@
    <children>
       <Label layoutX="36.0" layoutY="105.0" text="Abstract Deadline:" />
       <Label layoutX="35.0" layoutY="141.0" text="Proposal Deadline:" />
-      <Label layoutX="177.0" layoutY="105.0" text="Date1" />
-      <Label layoutX="177.0" layoutY="141.0" text="Date2" />
+      <Label fx:id="abstractLabel" layoutX="177.0" layoutY="105.0" text="Date1" />
+      <Label fx:id="proposalLabel" layoutX="177.0" layoutY="141.0" text="Date2" />
       <ComboBox layoutX="33.0" layoutY="20.0" prefHeight="31.0" prefWidth="184.0" promptText="Select a conference" />
       <ComboBox layoutX="33.0" layoutY="57.0" prefHeight="31.0" prefWidth="184.0" promptText="Select a section" />
       <Button layoutX="353.0" layoutY="295.0" mnemonicParsing="false" text="Upload file" />

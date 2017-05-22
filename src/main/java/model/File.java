@@ -8,10 +8,10 @@ import utils.AcceptLevel;
 public class File {
     private int idF, idses, reviewCount;
     private String keywords, topic, filedoc;
-    private AcceptLevel level;
+    private String level;
     private String abstractData;
 
-    public File(int idF, String keywords, String topic, String filedoc, AcceptLevel level, int idses, int reviewCount, String abstractData) {
+    public File(int idF, String keywords, String topic, String filedoc, String level, int idses, int reviewCount, String abstractData) {
         this.idF = idF;
         this.idses = idses;
         this.keywords = keywords;
@@ -65,11 +65,11 @@ public class File {
         this.filedoc = filedoc;
     }
 
-    public AcceptLevel getLevel() {
+    public String getLevel() {
         return level;
     }
 
-    public void setLevel(AcceptLevel level) {
+    public void setLevel(String level) {
         this.level = level;
     }
 
