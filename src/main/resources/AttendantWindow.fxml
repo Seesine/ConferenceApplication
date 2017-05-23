@@ -14,18 +14,18 @@
         <Label layoutX="14.0" layoutY="70.0" text="Select a session" />
         <Button layoutX="321.0" layoutY="293.0" mnemonicParsing="false" onAction="#setLogoutAction" text="Logout" />
         <Button layoutX="14.0" layoutY="293.0" mnemonicParsing="false" text="I participate as listener" />
-        <TextField layoutX="226.0" layoutY="85.0" />
-        <TextField layoutX="226.0" layoutY="139.0" />
-        <TextField layoutX="226.0" layoutY="193.0" />
-        <TextField layoutX="226.0" layoutY="247.0" />
+        <TextField fx:id="textFieldAuthor" layoutX="226.0" layoutY="85.0" />
+        <TextField fx:id="textFieldTopic" layoutX="226.0" layoutY="139.0" />
+        <TextField fx:id="textFieldDate" layoutX="226.0" layoutY="193.0" />
+        <TextField fx:id="textFieldHour" layoutX="226.0" layoutY="247.0" />
         <Label layoutX="226.0" layoutY="70.0" text="Author name" />
         <Label layoutX="226.0" layoutY="124.0" text="Topics" />
         <Label layoutX="226.0" layoutY="178.0" text="Date" />
         <Label layoutX="226.0" layoutY="232.0" text="Hour" />
-        <TableView layoutX="14.0" layoutY="84.0" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="sectionTableView" layoutX="14.0" layoutY="84.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="125.0" text="Sesiune" />
-          <TableColumn prefWidth="75.0" text="Nr listeneri" />
+          <TableColumn fx:id="sesiune" prefWidth="125.0" text="Sesiune" />
+          <TableColumn fx:id="nr" prefWidth="75.0" text="Nr listeneri" />
         </columns>
       </TableView>
     </children>
