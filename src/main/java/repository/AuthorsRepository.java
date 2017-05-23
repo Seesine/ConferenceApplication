@@ -4,6 +4,7 @@ import model.*;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.*;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -132,7 +133,7 @@ public class AuthorsRepository implements CRUDRepository
         List<Conference> sectList = new ArrayList<Conference>();
         try {
             tx = session.beginTransaction();
-            org.hibernate.query.Query query = session.createQuery("FROM Sections");
+            org.hibernate.query.Query query = session.createQuery("FROM Conference");
             sectList = query.list();
 
             tx.commit();
@@ -196,6 +197,47 @@ public class AuthorsRepository implements CRUDRepository
         }
     }
 
+    public List<Author> getAfterFileId(int id)
+    {
+        List<Integer> ff = new ArrayList<>();
+        List<Author> sectList = new ArrayList<Author>();
+        try {
+            String query = "SELECT * FROM legaf WHERE idf = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setInt(1, id);
+            ResultSet result = preparedStmt.executeQuery();
+            while (result.next())
+            {
+                ff.add(result.getInt("ida"));
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        for (Integer idrez : ff)
+        {
+            List<Author> rzm = new ArrayList<Author>();
+            Session session = factory.openSession();
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                org.hibernate.query.Query query = session.createQuery("FROM Author WHERE ida = :ida");
+                query.setParameter("ida", idrez);
+                rzm = query.list();
+                sectList.add(rzm.get(0));
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx != null) tx.rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
+
+            }
+        }
+        return sectList;
+    }
+
     public boolean login(String username,String password)
     {
         List<Author> authors = getAllAuthor();
@@ -212,5 +254,26 @@ public class AuthorsRepository implements CRUDRepository
         }
         else
             return false;
+    }
+    public void save(String username, String password, String name) {
+        Transaction tx = null;
+        boolean ret = false;
+        Session ses = factory.openSession();
+        try{
+            tx = ses.beginTransaction();
+            Query query = ses.createNativeQuery("INSERT INTO Authors (username, password, name) VALUES (:username, :password, :name)");
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            query.setParameter("name", name);
+            query.executeUpdate();
+            tx.commit();
+        }
+        catch (HibernateException ex){
+            if (tx != null) tx.rollback();
+            ex.printStackTrace();
+        }
+        finally{
+            ses.close();
+        }
     }
 }
