@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.cell.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+
 <AnchorPane prefHeight="587.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="36.0" layoutY="105.0" text="Abstract Deadline:" />
@@ -15,7 +16,7 @@
       <Label fx:id="proposalLabel" layoutX="177.0" layoutY="141.0" text="Date2" />
       <ComboBox fx:id="confCombo" layoutX="33.0" layoutY="20.0" prefHeight="31.0" prefWidth="184.0" promptText="Select a conference" />
       <ComboBox fx:id="sesCombo" layoutX="33.0" layoutY="57.0" prefHeight="31.0" prefWidth="184.0" promptText="Select a section" />
-      <Button fx:id="uploadButton" layoutX="346.0" layoutY="389.0" mnemonicParsing="false" onAction="#setUpload" text="Upload file" />
+      <Button fx:id="uploadButton" layoutX="346.0" layoutY="389.0" mnemonicParsing="false" onAction="#setUpload" prefHeight="21.0" prefWidth="92.0" text="Upload file" />
       <Label layoutX="36.0" layoutY="176.0" text="Proposal name:" />
       <Label layoutX="36.0" layoutY="218.0" text="Keywords:" />
       <TextField fx:id="propText" layoutX="144.0" layoutY="171.0" />
@@ -43,5 +44,6 @@
                </cellValueFactory>
             </TableColumn>
          </columns></TableView>
+      <Button fx:id="clearButton" layoutX="346.0" layoutY="429.0" mnemonicParsing="false" onAction="#setOnClear" text="Refresh author list" />
    </children>
 </AnchorPane>
