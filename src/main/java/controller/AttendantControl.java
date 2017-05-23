@@ -19,6 +19,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import repository.AttendantRepository;
 import repository.ConfRepository;
+import repository.AuthorsRepository;
 import model.Sections;
 import services.AuthorService;
 import sun.swing.SwingUtilities2;
@@ -35,11 +36,13 @@ public class AttendantControl
 {
     final Main loginManager;
     private ConfRepository confRepo = new ConfRepository();
-    //private SessionFactory factory;
+    private AuthorsRepository authorsRepository = new AuthorsRepository();
+    private SessionFactory factory;
     //private AttendantRepository attRepo = new AttendantRepository(factory);
     //private AttendantService service = new AttendantService(attRepo);
-    public AttendantControl(final Main loginManager) {
+    public AttendantControl(final Main loginManager, SessionFactory factory) {
         this.loginManager = loginManager;
+        this.factory = factory;
         //this.confRepo = confRepo;
     }
     @FXML
@@ -66,14 +69,25 @@ public class AttendantControl
     ComboBox<Sections> sessionComboBox;
     @FXML
     ComboBox<Conference> conferenceComboBox;
-
     private ObservableList<Conference> conferences;
     public void initialize(){
+        int id;
+        //int id = conferenceComboBox.getSelectionModel().getSelectedItem().getIdConference();
         conferenceComboBox.getItems().clear();
+        sessionComboBox.getItems().clear();
         ObservableList<Conference> obs = FXCollections.observableArrayList(confRepo.getAll());
         conferenceComboBox.setItems(obs);
-        //conferenceComboBox.getItems().addAll(confRepo.getAll());
-        //conferenceComboBox.setPromptText("Conferinta");
-        //conferenceComboBox.setEditable(true);
+        conferenceComboBox.getSelectionModel().selectFirst();
+        conferenceComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conference>() {
+            @Override
+            public void changed(ObservableValue observable, Conference oldValue, Conference newValue) {
+                ObservableList combobox2 = FXCollections.observableArrayList((List) authorsRepository.findByConfId(conferenceComboBox.getValue().getIdConference()));
+                sessionComboBox.setItems(combobox2);
+            }
+        });
+
+
+        //int id = conf.getIdConference();
+
     }
 }

@@ -56,7 +56,7 @@ public class AttendantRepository implements CRUDRepository {
         return idLogin;
     }
 
-    public void setIdLogin(int idat) {
+    public void setIdLogin(int idLogin) {
         this.idLogin = idLogin;
     }
 
