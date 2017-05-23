@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.*;
 import org.hibernate.query.Query;
 
+import java.math.BigInteger;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -108,7 +110,8 @@ public class AuthorsRepository implements CRUDRepository
             List<File> rzm = new ArrayList<File>();
             Session session = factory.openSession();
             Transaction tx = null;
-            try {
+            try
+            {
                 tx = session.beginTransaction();
                 org.hibernate.query.Query query = session.createQuery("FROM File WHERE idF = :idF");
                 query.setParameter("idF", idrez);
@@ -126,16 +129,34 @@ public class AuthorsRepository implements CRUDRepository
         return sectList;
     }
 
-    public int uploadFile(String prop,String key,String top,String abs,List<Author> autr)
+    public int uploadFile(String prop,String key,String top,String link, String abs,List<Author> autr)
     {
+        int lastId;
         Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        File fl = new File();
-        fl.setTitlu(prop);
-        fl.setKeywords(key);
-        fl.setTopic(top);
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            Query query = session.createNativeQuery("INSERT INTO file (keywords, topic, filedoc, abstractData, titlu) VALUES (:keywords, :topic, :filedoc, :abstractData, :titlu)");
+            query.setParameter("keywords", key);
+            query.setParameter("topic", top);
+            query.setParameter("filedoc", link);
+            query.setParameter("abstractData", abs);
+            query.setParameter("titlu", prop);
+            query.executeUpdate();
+            tx.commit();
+            lastId = ((BigInteger) session.createSQLQuery("SELECT LAST_INSERT_ID()").uniqueResult()).intValue();
+        }
+        catch (HibernateException ex){
 
-        return 0;
+            if (tx != null) tx.rollback();
+            ex.printStackTrace();
+            return 0;
+        }
+        finally
+        {
+            session.close();
+            return 1;
+        }
     }
     public List<Conference> getAllConferences()
     {
@@ -151,7 +172,9 @@ public class AuthorsRepository implements CRUDRepository
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
+        } finally
+        {
+
             session.close();
             return sectList;
         }
@@ -285,6 +308,26 @@ public class AuthorsRepository implements CRUDRepository
         }
         finally{
             ses.close();
+        }
+    }
+
+    public List<Files> getAllFilesAdmin()
+    {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        List<Files> sectList = new ArrayList<Files>();
+        try {
+            tx = session.beginTransaction();
+            org.hibernate.query.Query query = session.createQuery("FROM File");
+            sectList = query.list();
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+            return sectList;
         }
     }
 }

@@ -120,25 +120,24 @@ public class AuthorControl
     @FXML
     public void setUpload()
     {
-        String prop = propText.getText();
-        String key = keyText.getText();
-        String top = topText.getText();
-        String abs = absText.getText();
-        int ok = service.uploadFile(prop,key,top,abs,autr);
-        if (ok == 1)
+        if (autr.isEmpty())
         {
-            lista = service.getAllFiles();
-            autr.clear();
-            showMessage(Alert.AlertType.CONFIRMATION, "Succes", "The file was added with success");
+            showErrorMessage("Introduce at least one author");
         }
-        else
-            showErrorMessage("Eroare la adaugarea fisierului");
-
-    }
-
-    @FXML
-    public void setAddAuthor()
-    {
+        else {
+            String prop = propText.getText();
+            String key = keyText.getText();
+            String top = topText.getText();
+            String abs = absText.getText();
+            String link = linkText.getText();
+            int ok = service.uploadFile(prop, key, top, link, abs, autr);
+            if (ok == 1) {
+                lista = service.getAllFiles();
+                autr.clear();
+                showMessage(Alert.AlertType.CONFIRMATION, "Succes", "The file was added with success");
+            } else
+                showErrorMessage("Eroare la adaugarea fisierului");
+        }
 
     }
 

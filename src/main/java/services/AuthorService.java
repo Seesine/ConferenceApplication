@@ -46,8 +46,8 @@ public class AuthorService
         return repo.getAfterFileId(id);
     }
 
-    public int uploadFile(String prop,String key,String top,String abs,List<Author> autr)
+    public int uploadFile(String prop,String key,String top, String link,String abs,List<Author> autr)
     {
-        return repo.uploadFile(prop,key,top,abs,autr);
+        return repo.uploadFile(prop,key,top,abs,link,autr);
     }
 }
