@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -8,7 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import main.Main;
+import model.Author;
+import model.Conference;
 import model.File;
+import model.Sections;
 import repository.AuthorsRepository;
 import services.AuthorService;
 
@@ -24,9 +29,9 @@ public class AuthorControl
 {
     AuthorsRepository repo;
     final Main loginManager;
-    @FXML private ComboBox confCombo;
-    @FXML private ComboBox sesCombo;
-    @FXML private ComboBox authorCombo;
+    @FXML private ComboBox<Conference> confCombo;
+    @FXML private ComboBox<Sections> sesCombo;
+    @FXML private ComboBox<Author> authorCombo;
     @FXML private Button confirmButton;
     @FXML private Button addButton;
     @FXML private Button uploadButton;
@@ -34,6 +39,10 @@ public class AuthorControl
     @FXML private Label proposalLabel;
     @FXML private TextArea absText;
     @FXML private TableView fileTable;
+    @FXML private TextField propText;
+    @FXML private TextField keyText;
+    @FXML private TextField topText;
+
 
     @FXML private TableColumn<File, String> titlu;
     @FXML private TableColumn<File, String> filedoc;
@@ -41,6 +50,7 @@ public class AuthorControl
     private AuthorService service;
     private ObservableList files;
     private List<File> lista = new ArrayList<File>();
+    private ObservableList<Conference> conferences;
 
     public AuthorControl(AuthorsRepository repo,final Main loginManager)
     {
@@ -63,8 +73,22 @@ public class AuthorControl
 
             }
         });
+        this.conferences = FXCollections.observableArrayList(service.getAllConf());
 
+        confCombo.setItems(conferences);
+        confCombo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ObservableValue ov, Object t, Object t1)
+            {
+                ObservableList combox2 = FXCollections.observableArrayList((List) service.findByConfId(confCombo.getValue().getIdConference()));
+                sesCombo.setItems(combox2);
+                List<String> lst = service.returnDeadline(confCombo.getValue().getIdConference());
+                abstractLabel.setText(lst.get(0));
+                proposalLabel.setText(lst.get(1));
 
+            }
+        });
         fileTable.setItems(files);
     }
 
@@ -77,7 +101,10 @@ public class AuthorControl
     @FXML
     public void setUpload()
     {
-
+        String prop = propText.getText();
+        String key = keyText.getText();
+        String top = topText.getText();
+        String abs = absText.getText();
     }
 
     @FXML

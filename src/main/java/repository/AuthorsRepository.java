@@ -132,7 +132,7 @@ public class AuthorsRepository implements CRUDRepository
         List<Conference> sectList = new ArrayList<Conference>();
         try {
             tx = session.beginTransaction();
-            org.hibernate.query.Query query = session.createQuery("FROM Sections");
+            org.hibernate.query.Query query = session.createQuery("FROM Conference");
             sectList = query.list();
 
             tx.commit();

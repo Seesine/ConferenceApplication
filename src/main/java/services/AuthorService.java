@@ -1,6 +1,8 @@
 package services;
 
+import model.Conference;
 import model.File;
+import model.Sections;
 import repository.AuthorsRepository;
 
 import java.util.List;
@@ -18,5 +20,20 @@ public class AuthorService
     public List<File> getAllFiles()
     {
         return repo.getAllFiles();
+    }
+
+    public List<Conference> getAllConf()
+    {
+        return repo.getAllConferences();
+    }
+
+    public List<Sections> findByConfId(int id)
+    {
+        return repo.findByConfId(id);
+    }
+
+    public List<String> returnDeadline(int id)
+    {
+        return repo.returnDeadline(id);
     }
 }
