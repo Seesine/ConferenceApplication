@@ -197,6 +197,47 @@ public class AuthorsRepository implements CRUDRepository
         }
     }
 
+    public List<Author> getAfterFileId(int id)
+    {
+        List<Integer> ff = new ArrayList<>();
+        List<Author> sectList = new ArrayList<Author>();
+        try {
+            String query = "SELECT * FROM legaf WHERE idf = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setInt(1, id);
+            ResultSet result = preparedStmt.executeQuery();
+            while (result.next())
+            {
+                ff.add(result.getInt("ida"));
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        for (Integer idrez : ff)
+        {
+            List<Author> rzm = new ArrayList<Author>();
+            Session session = factory.openSession();
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                org.hibernate.query.Query query = session.createQuery("FROM Author WHERE ida = :ida");
+                query.setParameter("ida", idrez);
+                rzm = query.list();
+                sectList.add(rzm.get(0));
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx != null) tx.rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
+
+            }
+        }
+        return sectList;
+    }
+
     public boolean login(String username,String password)
     {
         List<Author> authors = getAllAuthor();
