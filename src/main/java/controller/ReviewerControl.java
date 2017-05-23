@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import main.Main;
 import model.File;
 import repository.FileRepository;
@@ -19,13 +20,17 @@ import java.awt.TextArea;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dragos on 5/8/2017.
  */
 public class ReviewerControl {
     private ReviewerRepository reviewRepo;
-    private FileRepository fileRepo = new FileRepository();
+    private FileRepository fileRepo;
+    private ReviewerRepository revRepo;
+
     @FXML
     ComboBox<AcceptLevel> acceptCB = new ComboBox<>();
     @FXML
@@ -36,6 +41,10 @@ public class ReviewerControl {
     private Button openFileBtn;
     @FXML
     private Button logoutBtn;
+    @FXML
+    private Button hideMineBtn;
+    @FXML
+    private javafx.scene.control.TextArea absArea;
     public ObservableList<File> fileList = FXCollections.observableArrayList();
     final Main loginManager;
     //@FXML
@@ -45,12 +54,27 @@ public class ReviewerControl {
     {
         this.loginManager = loginManager;
         this.fileRepo = fileRepo;
+        int temp = 0;
+    }
+    public ReviewerControl(final Main loginManager,FileRepository fileRepo, ReviewerRepository revRepo)
+    {
+        this.loginManager = loginManager;
+        this.fileRepo = fileRepo;
+        this.reviewRepo = revRepo;
+        int temp = 0;
     }
     public void initData(){
         fileTable.getItems().clear();
         for(File f : fileRepo.getAll()) {
             fileList.add(f);
         }
+
+        fileTable.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown()) {
+                absArea.setText(fileTable.getSelectionModel().getSelectedItem().getAbstractData());
+                //System.out.println(fileTable.getSelectionModel().getSelectedItem());
+            }
+        });
         fileTable.setItems(fileList);
         acceptCB.getItems().addAll(AcceptLevel.values());
 
@@ -58,6 +82,7 @@ public class ReviewerControl {
             try {
                 String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
                 Desktop.getDesktop().browse(new URI(website));
+                //System.out.println(String.valueOf(reviewRepo.getIdLogin()));
             } catch (IOException e1) {
                 e1.printStackTrace();
             } catch (URISyntaxException e1) {
@@ -98,6 +123,31 @@ public class ReviewerControl {
         });
 
         logoutBtn.setOnAction(event -> loginManager.logOut());
+
+        hideMineBtn.setOnAction(event -> {
+            for(File f : fileRepo.getAll()){
+                fileList.remove(f);
+            }
+            fileTable.setItems(fileList);
+            fileTable.getColumns().get(0).setVisible(false);
+            fileTable.getColumns().get(0).setVisible(true);
+            //System.out.println(fileRepo.getAllPairs().get(0));
+            List<Integer> listIds = new ArrayList<>();//salvez id-urile fisierelor de sters
+            for(FileRepository.Pair p : fileRepo.getAllPairs())
+                if(p.getIdO() == reviewRepo.getIdLogin()){
+                    listIds.add(p.getIdD());
+                }
+            for(File f : fileRepo.getAll()) {
+                if(listIds.contains(f.getIdF())){}
+                else{
+                    fileList.add(f);
+                }
+
+            }
+            fileTable.setItems(fileList);
+            fileTable.getColumns().get(0).setVisible(false);
+            fileTable.getColumns().get(0).setVisible(true);
+        });
 
     }
 
