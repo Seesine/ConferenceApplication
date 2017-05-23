@@ -77,7 +77,7 @@ public class ReviewerControl {
         });
         fileTable.setItems(fileList);
         acceptCB.getItems().addAll(AcceptLevel.values());
-        //delete this
+        //delete
         openFileBtn.setOnAction(e -> {
             try {
                 String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
