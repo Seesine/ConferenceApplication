@@ -37,14 +37,6 @@ public class SectionRepository {
         {
             tx = session.beginTransaction();
             sections = session.createQuery("FROM Sections ").list();
-            for (Iterator iterator = sections.iterator(); iterator.hasNext();)
-            {
-                Sections f = (Sections) iterator.next();
-                System.out.print("IdSection: " + f.getIdSection());
-                System.out.print("IdConference: " + f.getIdConference());
-                System.out.println("Name: " + f.getName());
-                System.out.println("SesChair: " + f.getSesChair());
-            }
             tx.commit();
         }
         catch (HibernateException e)

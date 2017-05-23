@@ -50,13 +50,7 @@ public class Conference
 
     @Override
     public String toString() {
-        return "Conference{" +
-                "idConference=" + idConference +
-                ", name='" + name + '\'' +
-                ", noParticipants=" + noParticipants +
-                ", deadlineProposal=" + deadlineProposal +
-                ", deadlineAbstract=" + deadlineAbstract +
-                '}';
+        return name;
     }
 
     public String getName() {

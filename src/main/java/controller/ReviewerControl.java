@@ -15,6 +15,7 @@ import repository.ReviewerRepository;
 import utils.AcceptLevel;
 
 import java.awt.*;
+import java.awt.TextArea;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,18 +31,15 @@ public class ReviewerControl {
     @FXML
     private TableView<File> fileTable = new TableView<>();
     @FXML
-    private TableColumn<String,File> tableC = new TableColumn<>();
-    @FXML
-    private TableColumn<String,File> tableC2 = new TableColumn<>();
-
-
-
-    @FXML
     private Button reviewButton;
     @FXML
-    private Button openFileBtn = new Button();
+    private Button openFileBtn;
+    @FXML
+    private Button logoutBtn;
     public ObservableList<File> fileList = FXCollections.observableArrayList();
     final Main loginManager;
+    //@FXML
+    //private TextArea absArea;
 
     public ReviewerControl(final Main loginManager,FileRepository fileRepo)
     {
@@ -50,62 +48,57 @@ public class ReviewerControl {
     }
     public void initData(){
         fileTable.getItems().clear();
-        //fileTable.setEditable(true);
-
-        //tableC2.setCellValueFactory(new PropertyValueFactory<String,File>("filedoc"));
-        //fileTable.getColumns().addAll(tableC, tableC2);
         for(File f : fileRepo.getAll()) {
             fileList.add(f);
         }
         fileTable.setItems(fileList);
         acceptCB.getItems().addAll(AcceptLevel.values());
 
-        openFileBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                try {
-                    String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
-                    Desktop.getDesktop().browse(new URI(website));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (URISyntaxException e1) {
-                    e1.printStackTrace();
-                }
-                  catch(NullPointerException el){
-                    showErrorMessage("Selectati ceva!");
-                }
+        openFileBtn.setOnAction(e -> {
+            try {
+                String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
+                Desktop.getDesktop().browse(new URI(website));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+              catch(NullPointerException el){
+                showErrorMessage("Selectati ceva!");
             }
         });
 
-        reviewButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try{
-                    int reviewCount = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
-                    int id = fileTable.getSelectionModel().getSelectedItem().getIdF();
-                    if(reviewCount < 4){
-                        String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
-                        int currentLevelNo = mapLevelToInt(currentLevel);
-                        int selectedLevelNo = mapLevelToInt(acceptCB.getSelectionModel().getSelectedItem().toString());
-                        int average;
-                        if(reviewCount == 0)
-                            average = selectedLevelNo;
-                        else
-                            average = (currentLevelNo + selectedLevelNo)/(reviewCount+1);
-                        String averageLevel = mapIntToLevel(average);
-                        fileRepo.getById(id).setLevel(averageLevel);
-                        fileRepo.getById(id).setReviewCount(++reviewCount);
-                        int temp = 0;
-                        //initData();
-                        fileTable.getColumns().get(0).setVisible(false);
-                        fileTable.getColumns().get(0).setVisible(true);
-                    }
+        reviewButton.setOnAction(event -> {
+            try{
+                File oldFile = fileTable.getSelectionModel().getSelectedItem();
+                int reviewCount = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
+                int id = fileTable.getSelectionModel().getSelectedItem().getIdF();
+                if(reviewCount < 4){
+                    String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
+                    int currentLevelNo = mapLevelToInt(currentLevel);
+                    int selectedLevelNo = mapLevelToInt(acceptCB.getSelectionModel().getSelectedItem().toString());
+                    int average;
+                    if(reviewCount == 0)
+                        average = selectedLevelNo;
                     else
-                        showErrorMessage("Too many reviewers already");
-                }catch(Exception ex){
-                    showErrorMessage(ex.toString());
+                        average = (currentLevelNo*reviewCount + selectedLevelNo)/(reviewCount+1);
+                    String averageLevel = mapIntToLevel(average);
+                    fileRepo.getById(id).setLevel(averageLevel);
+                    fileRepo.getById(id).setReviewCount(++reviewCount);
+                    File newFile = fileRepo.getById(id);
+                    fileTable.getColumns().get(0).setVisible(false);
+                    fileTable.getColumns().get(0).setVisible(true);
+                    fileRepo.updateFile(oldFile, newFile);
                 }
+                else
+                    showErrorMessage("Too many reviewers already");
+            }catch(Exception ex){
+                showErrorMessage(ex.toString());
             }
         });
+
+        logoutBtn.setOnAction(event -> loginManager.logOut());
+
     }
 
     private String mapIntToLevel(int average) {
@@ -151,20 +144,5 @@ public class ReviewerControl {
         alert.showAndWait();
     }
 
-    @FXML
-    private void reviewHandle(ActionEvent event){
-        String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
-        int currentNumber = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
-        int selectedFileId = fileTable.getSelectionModel().getSelectedItem().getIdF();
-        //File f = fileRepo.getById(selectedFileId);
-        //f.setLevel("Accept");
-        //initData();
-    }
-
-    @FXML
-    private void setLogoutAction(){
-
-        loginManager.logOut();
-    }
 
 }

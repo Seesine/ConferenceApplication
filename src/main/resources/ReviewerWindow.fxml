@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane prefHeight="449.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="518.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TableView fx:id="fileTable" prefHeight="449.0" prefWidth="417.0">
             <columns>
@@ -33,10 +33,12 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <ComboBox fx:id="acceptCB" layoutX="439.0" layoutY="273.0" prefWidth="150.0" />
-        <Button fx:id="openFileBtn" layoutX="480.0" layoutY="72.0" mnemonicParsing="false" text="Open File" />
-        <Label layoutX="483.0" layoutY="246.0" text="Accept Level" />
-        <Button fx:id="reviewButton" layoutX="485.0" layoutY="314.0" mnemonicParsing="false" text="Review!" />
-        <Button fx:id="logoutBtn" layoutX="487.0" layoutY="386.0" mnemonicParsing="false" text="Logout" />
+        <ComboBox fx:id="acceptCB" layoutX="518.0" layoutY="339.0" prefWidth="150.0" />
+        <Button fx:id="openFileBtn" layoutX="480.0" layoutY="20.0" mnemonicParsing="false" text="Open File" />
+        <Label layoutX="562.0" layoutY="312.0" text="Accept Level" />
+        <Button fx:id="reviewButton" layoutX="564.0" layoutY="380.0" mnemonicParsing="false" text="Review!" />
+        <Button fx:id="logoutBtn" layoutX="566.0" layoutY="452.0" mnemonicParsing="false" text="Logout" />
+      <TextArea fx:id="absArea" layoutX="509.0" layoutY="117.0" prefHeight="175.0" prefWidth="159.0" />
+      <Label layoutX="574.0" layoutY="83.0" text="Abstract" />
     </children>
 </AnchorPane>

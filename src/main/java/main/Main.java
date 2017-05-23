@@ -146,7 +146,7 @@ public class Main extends Application
             loader4.setLocation(fxmlUrl);
 
 
-            controlAuthor = new AuthorControl(this);
+            controlAuthor = new AuthorControl(AULRepository,this);
             loader4.setController(controlAuthor);
             rootLayout4 = loader4.load();
             scene4 = new Scene(rootLayout4);
@@ -185,6 +185,7 @@ public class Main extends Application
             controlAttendant = new AttendantControl(this);
             loader6.setController(controlAttendant);
             rootLayout6 = loader6.load();
+            controlAttendant.initialize();
             scene6 = new Scene(rootLayout6);
         }
 
@@ -238,6 +239,7 @@ public class Main extends Application
     {
         primaryStage.setScene(scene4);
         primaryStage.show();
+        controlAuthor.initialize();
     }
 
     private void AdminView()
