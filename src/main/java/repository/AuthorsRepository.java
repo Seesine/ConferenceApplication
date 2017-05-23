@@ -4,6 +4,7 @@ import model.*;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.*;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -132,7 +133,7 @@ public class AuthorsRepository implements CRUDRepository
         List<Conference> sectList = new ArrayList<Conference>();
         try {
             tx = session.beginTransaction();
-            org.hibernate.query.Query query = session.createQuery("FROM Sections");
+            org.hibernate.query.Query query = session.createQuery("FROM Conference");
             sectList = query.list();
 
             tx.commit();
@@ -212,5 +213,26 @@ public class AuthorsRepository implements CRUDRepository
         }
         else
             return false;
+    }
+    public void save(String username, String password, String name) {
+        Transaction tx = null;
+        boolean ret = false;
+        Session ses = factory.openSession();
+        try{
+            tx = ses.beginTransaction();
+            Query query = ses.createNativeQuery("INSERT INTO Authors (username, password, name) VALUES (:username, :password, :name)");
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            query.setParameter("name", name);
+            query.executeUpdate();
+            tx.commit();
+        }
+        catch (HibernateException ex){
+            if (tx != null) tx.rollback();
+            ex.printStackTrace();
+        }
+        finally{
+            ses.close();
+        }
     }
 }

@@ -77,6 +77,7 @@ public class Main extends Application
         AuthorsRepository AULRepository = new AuthorsRepository();
         AdminRepository ADRepo = new AdminRepository(factory);
         ReviewerRepository RVWRepo = new ReviewerRepository();
+        DefaultUserRepository DURepo = new DefaultUserRepository(factory);
         this.primaryStage = primaryStage;
         loader = new FXMLLoader();
         loader2 = new FXMLLoader();
@@ -164,7 +165,7 @@ public class Main extends Application
             loader5.setLocation(fxmlUrl);
 
 
-            controlAdmin = new AdminControl(this);
+            controlAdmin = new AdminControl(this, CMLRepository, ATLRepository, AULRepository, RVWRepo, ADRepo, DURepo);
             loader5.setController(controlAdmin);
             rootLayout5 = loader5.load();
             scene5 = new Scene(rootLayout5);
