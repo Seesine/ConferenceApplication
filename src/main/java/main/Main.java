@@ -76,7 +76,7 @@ public class Main extends Application
         SectionRepository secRepo = new SectionRepository();
         FileRepository fileRepo = new FileRepository();
         CMRepository CMLRepository = new CMRepository();
-        AttendantRepository ATLRepository = new AttendantRepository(factory);
+        AttendantRepository ATLRepository = new AttendantRepository();
         AuthorsRepository AULRepository = new AuthorsRepository();
         AdminRepository ADRepo = new AdminRepository(factory);
         ReviewerRepository RVWRepo = new ReviewerRepository();

@@ -35,9 +35,9 @@ public class AttendantControl
 {
     final Main loginManager;
     private ConfRepository confRepo = new ConfRepository();
-    private SessionFactory factory;
-    private AttendantRepository attRepo = new AttendantRepository(factory);
-    private AttendantService service = new AttendantService(attRepo);
+    //private SessionFactory factory;
+    //private AttendantRepository attRepo = new AttendantRepository(factory);
+    //private AttendantService service = new AttendantService(attRepo);
     public AttendantControl(final Main loginManager) {
         this.loginManager = loginManager;
         //this.confRepo = confRepo;
@@ -69,25 +69,11 @@ public class AttendantControl
 
     private ObservableList<Conference> conferences;
     public void initialize(){
-        //conferenceComboBox.getItems().clear();
-        //ObservableList<Conference> obs = FXCollections.observableArrayList(confRepo.getAll());
-        //conferenceComboBox.setItems(obs);
+        conferenceComboBox.getItems().clear();
+        ObservableList<Conference> obs = FXCollections.observableArrayList(confRepo.getAll());
+        conferenceComboBox.setItems(obs);
         //conferenceComboBox.getItems().addAll(confRepo.getAll());
         //conferenceComboBox.setPromptText("Conferinta");
         //conferenceComboBox.setEditable(true);
-
-        conferences = FXCollections.observableArrayList(service.getAllConf());
-        conferenceComboBox.setItems(conferences);
-
-        conferenceComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
-        {
-            @Override
-            public void changed(ObservableValue ov, Object t, Object t1)
-            {
-                ObservableList combox2 = FXCollections.observableArrayList((List) service.findByConfId(conferenceComboBox.getValue().getIdConference()));
-                sessionComboBox.setItems(combox2);
-                //List<String> lst = service.returnDeadline(conferenceComboBox.getValue().getIdConference());
-            }
-        });
     }
 }

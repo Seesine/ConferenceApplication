@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Dragos on 5/8/2017.
  */
 public class AttendantService {
-    AttendantRepository attrepo;
+    /*AttendantRepository attrepo;
     public AttendantService(AttendantRepository attrepo){
         this.attrepo = attrepo;
     }
@@ -21,5 +21,5 @@ public class AttendantService {
 
     public List<Sections> findByConfId(int id){
         return attrepo.findByConfId(id);
-    }
+    }*/
 }
