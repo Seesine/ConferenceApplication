@@ -183,10 +183,10 @@ public class Main extends Application
             loader6.setLocation(fxmlUrl);
 
 
-            controlAttendant = new AttendantControl(this, factory);
+            controlAttendant = new AttendantControl(this);
             loader6.setController(controlAttendant);
             rootLayout6 = loader6.load();
-            //controlAttendant.initialize();
+            controlAttendant.initialize();
             scene6 = new Scene(rootLayout6);
         }
 

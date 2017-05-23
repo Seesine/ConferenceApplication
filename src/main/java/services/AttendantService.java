@@ -15,11 +15,11 @@ public class AttendantService {
     public AttendantService(AttendantRepository attrepo){
         this.attrepo = attrepo;
     }
-    /*public List<Conference> getAllConf(){
-        return attrepo.allConf();
+    public List<Conference> getAllConf(){
+        return attrepo.getAllConferences();
     }
 
-    public List<Sections> getAllSections(){
-        return attrepo.allSections();
-    }*/
+    public List<Sections> findByConfId(int id){
+        return attrepo.findByConfId(id);
+    }
 }
