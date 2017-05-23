@@ -42,11 +42,10 @@ public class AuthorControl
     @FXML private TextField propText;
     @FXML private TextField keyText;
     @FXML private TextField topText;
-
-
     @FXML private TableColumn<File, String> titlu;
     @FXML private TableColumn<File, String> filedoc;
 
+    private List<Author> authorSave;
     private AuthorService service;
     private ObservableList files;
     private List<File> lista = new ArrayList<File>();
@@ -58,7 +57,7 @@ public class AuthorControl
         this.loginManager = loginManager;
 
     }
-
+    @SuppressWarnings("unchecked")
     public void initialize()
     {
         this.service = new AuthorService(this.repo);
@@ -76,6 +75,7 @@ public class AuthorControl
         this.conferences = FXCollections.observableArrayList(service.getAllConf());
 
         confCombo.setItems(conferences);
+
         confCombo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
         {
             @Override
@@ -89,6 +89,17 @@ public class AuthorControl
 
             }
         });
+
+        fileTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
+        {
+            if (newSelection != null)
+            {
+                keyText.setText(((File) newSelection).getKeywords().toString());
+                topText.setText(((File) newSelection).getTopic());
+            }
+        });
+
+
         fileTable.setItems(files);
     }
 
@@ -117,5 +128,21 @@ public class AuthorControl
     public void setConfirm()
     {
 
+    }
+
+    static void showMessage(Alert.AlertType type, String header, String text)
+    {
+        Alert message=new Alert(type);
+        message.setHeaderText(header);
+        message.setContentText(text);
+        message.showAndWait();
+    }
+
+    static void showErrorMessage(String text)
+    {
+        Alert message=new Alert(Alert.AlertType.ERROR);
+        message.setTitle("Mesaj eroare");
+        message.setContentText(text);
+        message.showAndWait();
     }
 }
