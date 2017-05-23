@@ -36,7 +36,8 @@ public class AttendantControl
         ObservableList<Conference> obs = FXCollections.observableArrayList(confRepo.getAll());
         conferenceComboBox.setItems(obs);
         //conferenceComboBox.getItems().addAll(confRepo.getAll());
-        conferenceComboBox.setPromptText("Conferinta");
-        conferenceComboBox.setEditable(true);
+        //conferenceComboBox.setPromptText("Conferinta");
+        //conferenceComboBox.setEditable(true);
+        
     }
 }
