@@ -96,8 +96,8 @@ public class DefaultUserRepository {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            DefaultUser du = new DefaultUser(username, password);
-            session.save(du);
+            Query query = session.createNativeQuery("INSERT INTO userdefault (username, password) VALUES (\'"+username+"\', \'"+password+"\')");
+            query.executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
