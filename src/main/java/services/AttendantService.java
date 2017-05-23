@@ -1,6 +1,8 @@
 package services;
 
 import model.Attendant;
+import model.Conference;
+import model.Sections;
 import repository.AttendantRepository;
 
 import java.util.List;
@@ -13,4 +15,11 @@ public class AttendantService {
     public AttendantService(AttendantRepository attrepo){
         this.attrepo = attrepo;
     }
+    /*public List<Conference> getAllConf(){
+        return attrepo.allConf();
+    }
+
+    public List<Sections> getAllSections(){
+        return attrepo.allSections();
+    }*/
 }

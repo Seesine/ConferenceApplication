@@ -17,6 +17,7 @@ import org.hibernate.query.Query;
 import repository.ConfRepository;
 import model.Sections;
 import sun.swing.SwingUtilities2;
+import services.AttendantService;
 
 import javafx.scene.control.TableView;
 import javax.xml.soap.Text;
@@ -73,9 +74,10 @@ public class AttendantControl
         try{
             Conference conf = conferenceComboBox.getSelectionModel().getSelectedItem();
             int id = conf.getIdConference();
-            Transaction tx = null;
-            Session ses = factory.openSession();
-            try{
+            ObservableList<Sections> sesiuni;
+            //Transaction tx = null;
+            //Session ses = factory.openSession();
+            /*try{
                 tx = ses.beginTransaction();
                 Query query = ses.createQuery("FROM Sections WHERE id = :id");
                 query.setParameter("id", id);
@@ -85,9 +87,9 @@ public class AttendantControl
             catch(HibernateException ex1){
                 if (tx != null) tx.rollback();
                 ex1.printStackTrace();
-            }
+            }*/
+            //sesiuni = FXCollections.observableArrayList(service.)
 
-            
 
         }
         catch (Exception ex2) {
