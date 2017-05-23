@@ -36,7 +36,7 @@ public class AdminControl
     static List<String> infoAuthors = new ArrayList<String>(Arrays.asList("Name"));
     static List<String> infoCM = new ArrayList<String>(Arrays.asList("Name", "Affiliation", "Email", "WebPage"));
 
-    String info1, info2, info3, info4;
+    private String info1, info2, info3, info4;
 
     // Logins Repositories
     private CMRepository CMLRepository;
