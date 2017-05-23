@@ -50,7 +50,6 @@ public class FileRepository {
 //                repository.FileRepository.Pair p = (repository.FileRepository.Pair) iterator.next();
 //            }
             tx.commit();
-            System.out.println(idList.get(0).getIdD());
         }
         //asdf
         catch (HibernateException e)

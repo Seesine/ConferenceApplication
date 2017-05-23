@@ -77,12 +77,12 @@ public class ReviewerControl {
         });
         fileTable.setItems(fileList);
         acceptCB.getItems().addAll(AcceptLevel.values());
+
         //delete
         openFileBtn.setOnAction(e -> {
             try {
                 String website = fileTable.getSelectionModel().getSelectedItem().getFiledoc();
                 Desktop.getDesktop().browse(new URI(website));
-                //System.out.println(String.valueOf(reviewRepo.getIdLogin()));
             } catch (IOException e1) {
                 e1.printStackTrace();
             } catch (URISyntaxException e1) {
@@ -98,22 +98,27 @@ public class ReviewerControl {
                 File oldFile = fileTable.getSelectionModel().getSelectedItem();
                 int reviewCount = fileTable.getSelectionModel().getSelectedItem().getReviewCount();
                 int id = fileTable.getSelectionModel().getSelectedItem().getIdF();
+                List<Integer> ownFileIds = getFileIdsFromLoginId();
                 if(reviewCount < 4){
-                    String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
-                    int currentLevelNo = mapLevelToInt(currentLevel);
-                    int selectedLevelNo = mapLevelToInt(acceptCB.getSelectionModel().getSelectedItem().toString());
-                    int average;
-                    if(reviewCount == 0)
-                        average = selectedLevelNo;
-                    else
-                        average = (currentLevelNo*reviewCount + selectedLevelNo)/(reviewCount+1);
-                    String averageLevel = mapIntToLevel(average);
-                    fileRepo.getById(id).setLevel(averageLevel);
-                    fileRepo.getById(id).setReviewCount(++reviewCount);
-                    File newFile = fileRepo.getById(id);
-                    fileTable.getColumns().get(0).setVisible(false);
-                    fileTable.getColumns().get(0).setVisible(true);
-                    fileRepo.updateFile(oldFile, newFile);
+                    if(ownFileIds.contains(fileTable.getSelectionModel().getSelectedItem().getIdF()))
+                        showErrorMessage("You can't review your own paper!");
+                    else {
+                        String currentLevel = fileTable.getSelectionModel().getSelectedItem().getLevel();
+                        int currentLevelNo = mapLevelToInt(currentLevel);
+                        int selectedLevelNo = mapLevelToInt(acceptCB.getSelectionModel().getSelectedItem().toString());
+                        int average;
+                        if (reviewCount == 0)
+                            average = selectedLevelNo;
+                        else
+                            average = (currentLevelNo * reviewCount + selectedLevelNo) / (reviewCount + 1);
+                        String averageLevel = mapIntToLevel(average);
+                        fileRepo.getById(id).setLevel(averageLevel);
+                        fileRepo.getById(id).setReviewCount(++reviewCount);
+                        File newFile = fileRepo.getById(id);
+                        fileTable.getColumns().get(0).setVisible(false);
+                        fileTable.getColumns().get(0).setVisible(true);
+                        fileRepo.updateFile(oldFile, newFile);
+                    }
                 }
                 else
                     showErrorMessage("Too many reviewers already");
@@ -133,6 +138,7 @@ public class ReviewerControl {
             fileTable.getColumns().get(0).setVisible(true);
             //System.out.println(fileRepo.getAllPairs().get(0));
             List<Integer> listIds = new ArrayList<>();//salvez id-urile fisierelor de sters
+
             for(FileRepository.Pair p : fileRepo.getAllPairs())
                 if(p.getIdO() == reviewRepo.getIdLogin()){
                     listIds.add(p.getIdD());
@@ -151,6 +157,14 @@ public class ReviewerControl {
 
     }
 
+    public List<Integer> getFileIdsFromLoginId(){
+        List<Integer> listIds = new ArrayList<>();
+        for(FileRepository.Pair p : fileRepo.getAllPairs())
+            if(p.getIdO() == reviewRepo.getIdLogin()){
+                listIds.add(p.getIdD());
+            }
+        return listIds;
+    }
     private String mapIntToLevel(int average) {
         if(average == 1)
             return "StrongAccept";
