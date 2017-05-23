@@ -42,6 +42,7 @@ public class AuthorControl
     @FXML private TextField propText;
     @FXML private TextField keyText;
     @FXML private TextField topText;
+    @FXML private TextField linkText;
     @FXML private TableColumn<File, String> titlu;
     @FXML private TableColumn<File, String> filedoc;
 
@@ -96,6 +97,9 @@ public class AuthorControl
             {
                 keyText.setText(((File) newSelection).getKeywords().toString());
                 topText.setText(((File) newSelection).getTopic());
+                absText.setText(((File) newSelection).getAbstractData());
+                linkText.setText(((File) newSelection).getFiledoc());
+                propText.setText(((File) newSelection).getTitlu());
             }
         });
 
@@ -126,6 +130,12 @@ public class AuthorControl
 
     @FXML
     public void setConfirm()
+    {
+
+    }
+
+    public void setOnClear()
+
     {
 
     }
