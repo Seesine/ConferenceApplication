@@ -1,5 +1,6 @@
 package services;
 
+import model.Author;
 import model.Conference;
 import model.File;
 import model.Sections;
@@ -17,10 +18,13 @@ public class AuthorService
     {
          this.repo = repo;
     }
+
     public List<File> getAllFiles()
     {
         return repo.getAllFiles();
     }
+
+    public List<Author> getAllAuthors() { return repo.getAllAuthor(); }
 
     public List<Conference> getAllConf()
     {
@@ -35,5 +39,15 @@ public class AuthorService
     public List<String> returnDeadline(int id)
     {
         return repo.returnDeadline(id);
+    }
+
+    public List<Author> getAfterFileId(int id)
+    {
+        return repo.getAfterFileId(id);
+    }
+
+    public int uploadFile(String prop,String key,String top,String abs,List<Author> autr)
+    {
+        return repo.uploadFile(prop,key,top,abs,autr);
     }
 }

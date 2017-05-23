@@ -46,11 +46,13 @@ public class AuthorControl
     @FXML private TableColumn<File, String> titlu;
     @FXML private TableColumn<File, String> filedoc;
 
+    private ObservableList<Author> aut;
     private List<Author> authorSave;
     private AuthorService service;
     private ObservableList files;
     private List<File> lista = new ArrayList<File>();
     private ObservableList<Conference> conferences;
+    private List<Author> autr = new ArrayList<Author>();
 
     public AuthorControl(AuthorsRepository repo,final Main loginManager)
     {
@@ -100,10 +102,12 @@ public class AuthorControl
                 absText.setText(((File) newSelection).getAbstractData());
                 linkText.setText(((File) newSelection).getFiledoc());
                 propText.setText(((File) newSelection).getTitlu());
+                ObservableList<Author> autori = FXCollections.observableArrayList(service.getAfterFileId(((File) newSelection).getIdF()));
+                authorCombo.setItems(autori);
             }
         });
-
-
+        aut = FXCollections.observableArrayList(service.getAllAuthors());
+        authorCombo.setItems(aut);
         fileTable.setItems(files);
     }
 
@@ -120,6 +124,16 @@ public class AuthorControl
         String key = keyText.getText();
         String top = topText.getText();
         String abs = absText.getText();
+        int ok = service.uploadFile(prop,key,top,abs,autr);
+        if (ok == 1)
+        {
+            lista = service.getAllFiles();
+            autr.clear();
+            showMessage(Alert.AlertType.CONFIRMATION, "Succes", "The file was added with success");
+        }
+        else
+            showErrorMessage("Eroare la adaugarea fisierului");
+
     }
 
     @FXML
@@ -131,13 +145,20 @@ public class AuthorControl
     @FXML
     public void setConfirm()
     {
-
+        autr.add(authorCombo.getValue());
+        Author del = authorCombo.getValue();
+        authorCombo.getItems().remove(del);
     }
 
     public void setOnClear()
-
     {
-
+        authorCombo.setItems(aut);
+        keyText.clear();
+        topText.clear();
+        absText.clear();
+        linkText.clear();
+        propText.clear();
+        autr.clear();
     }
 
     static void showMessage(Alert.AlertType type, String header, String text)

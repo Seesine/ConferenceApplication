@@ -126,6 +126,17 @@ public class AuthorsRepository implements CRUDRepository
         return sectList;
     }
 
+    public int uploadFile(String prop,String key,String top,String abs,List<Author> autr)
+    {
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        File fl = new File();
+        fl.setTitlu(prop);
+        fl.setKeywords(key);
+        fl.setTopic(top);
+
+        return 0;
+    }
     public List<Conference> getAllConferences()
     {
         Session session = factory.openSession();
