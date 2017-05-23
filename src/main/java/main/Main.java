@@ -113,7 +113,8 @@ public class Main extends Application
             loader2.setLocation(fxmlUrl);
 
 
-            controlReviewer = new ReviewerControl(this,fileRepo);
+            //controlReviewer = new ReviewerControl(this,fileRepo);
+            controlReviewer = new ReviewerControl(this,fileRepo, RVWRepo);
             loader2.setController(controlReviewer);
             rootLayout2 = loader2.load();
             controlReviewer.initData();
@@ -188,7 +189,7 @@ public class Main extends Application
             controlAttendant = new AttendantControl(this);
             loader6.setController(controlAttendant);
             rootLayout6 = loader6.load();
-            controlAttendant.initialize();
+            //controlAttendant.initialize();
             scene6 = new Scene(rootLayout6);
         }
 
