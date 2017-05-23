@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.cell.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+
 <AnchorPane prefHeight="587.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="36.0" layoutY="105.0" text="Abstract Deadline:" />
@@ -15,7 +16,7 @@
       <Label fx:id="proposalLabel" layoutX="177.0" layoutY="141.0" text="Date2" />
       <ComboBox fx:id="confCombo" layoutX="33.0" layoutY="20.0" prefHeight="31.0" prefWidth="184.0" promptText="Select a conference" />
       <ComboBox fx:id="sesCombo" layoutX="33.0" layoutY="57.0" prefHeight="31.0" prefWidth="184.0" promptText="Select a section" />
-      <Button fx:id="uploadButton" layoutX="346.0" layoutY="389.0" mnemonicParsing="false" onAction="#setUpload" text="Upload file" />
+      <Button fx:id="uploadButton" layoutX="346.0" layoutY="389.0" mnemonicParsing="false" onAction="#setUpload" prefHeight="21.0" prefWidth="92.0" text="Upload file" />
       <Label layoutX="36.0" layoutY="176.0" text="Proposal name:" />
       <Label layoutX="36.0" layoutY="218.0" text="Keywords:" />
       <TextField fx:id="propText" layoutX="144.0" layoutY="171.0" />
@@ -23,13 +24,12 @@
       <TextField fx:id="topText" layoutX="144.0" layoutY="254.0" />
       <Label layoutX="35.0" layoutY="259.0" text="Topics:" />
       <Label layoutX="35.0" layoutY="300.0" />
-      <Button fx:id="addButton" layoutX="22.0" layoutY="444.0" mnemonicParsing="false" onAction="#setAddAuthor" text="Add author" />
-      <Button fx:id="confirmButton" layoutX="140.0" layoutY="522.0" mnemonicParsing="false" onAction="#setConfirm" text="Confirm" />
-      <Label layoutX="25.0" layoutY="487.0" text="Author name:" />
+      <Button fx:id="confirmButton" layoutX="140.0" layoutY="491.0" mnemonicParsing="false" onAction="#setConfirm" text="Add one author" />
+      <Label layoutX="36.0" layoutY="450.0" text="Author name:" />
       <TextArea fx:id="absText" layoutX="144.0" layoutY="295.0" prefHeight="77.0" prefWidth="187.0" />
       <Label layoutX="32.0" layoutY="300.0" prefHeight="21.0" prefWidth="68.0" text="Abstract:" />
       <Button layoutX="568.0" layoutY="506.0" mnemonicParsing="false" onAction="#setLogoutAction" text="Logout" />
-      <ComboBox fx:id="authorCombo" layoutX="138.0" layoutY="482.0" prefHeight="31.0" prefWidth="187.0" />
+      <ComboBox fx:id="authorCombo" layoutX="138.0" layoutY="445.0" prefHeight="31.0" prefWidth="187.0" />
       <Label layoutX="34.0" layoutY="394.0" text="File cloud link:" />
       <TextField fx:id="linkText" layoutX="144.0" layoutY="389.0" />
       <TableView fx:id="fileTable" layoutX="353.0" layoutY="24.0" prefHeight="346.0" prefWidth="275.0">
@@ -43,5 +43,6 @@
                </cellValueFactory>
             </TableColumn>
          </columns></TableView>
+      <Button fx:id="clearButton" layoutX="346.0" layoutY="429.0" mnemonicParsing="false" onAction="#setOnClear" text="Refresh author list" />
    </children>
 </AnchorPane>

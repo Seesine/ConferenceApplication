@@ -8,9 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.util.Callback;
 import main.Main;
 import model.DefaultUser;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import repository.*;
 
 import javax.xml.soap.Text;
@@ -31,12 +34,13 @@ public class AdminControl
     @FXML private Button registerButton;
     @FXML private Button deleteButton;
     @FXML private Button logoutButton;
+    @FXML private Label infoLabel;
 
     static List<String> infoAttendant = new ArrayList<String>(Arrays.asList(""));
     static List<String> infoAuthors = new ArrayList<String>(Arrays.asList("Name"));
     static List<String> infoCM = new ArrayList<String>(Arrays.asList("Name", "Affiliation", "Email", "WebPage"));
 
-    private String info1, info2, info3, info4;
+    private String info1 = "", info2 = "", info3 = "", info4 = "";
 
     // Logins Repositories
     private CMRepository CMLRepository;
@@ -57,6 +61,7 @@ public class AdminControl
         this.DURepo = DURepo;
     }
     @FXML public void initialize() {
+        infoLabel.setDisable(true);
         List<String> laccess = new ArrayList<String>();
         laccess.add("Attendant");
         laccess.add("Author");
@@ -131,6 +136,44 @@ public class AdminControl
                 }
             }
         });
+        infoTextField.focusedProperty().addListener(new ChangeListener<Boolean>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+            {
+                if (newPropertyValue)
+                {
+                    String selectedInfo = infoComboBox.getValue();
+                    if (selectedInfo == null) {
+                        infoTextField.setStyle("-fx-border-color: black;");
+                        return;
+                    }
+                    if (selectedInfo.equals("Name")) {
+                        if (info1.equals(""))
+                            infoTextField.setStyle("-fx-border-color: red;");
+                        else infoTextField.setStyle("-fx-border-color: green");
+                    } else if (selectedInfo.equals("Affiliation")) {
+                        if (info2.equals(""))
+                            infoTextField.setStyle("-fx-border-color: red;");
+                        else infoTextField.setStyle("-fx-border-color: green");;
+                    } else if (selectedInfo.equals("Email")) {
+                        if (info3.equals(""))
+                            infoTextField.setStyle("-fx-border-color: red;");
+                        else infoTextField.setStyle("-fx-border-color: green");
+                    } else if (selectedInfo.equals("WebPage")) {
+                        if (info4.equals(""))
+                            infoTextField.setStyle("-fx-border-color: red;");
+                        else infoTextField.setStyle("-fx-border-color: green");
+                    }
+                    infoLabel.setDisable(false);
+                }
+                else
+                {
+                    infoLabel.setDisable(true);
+                    infoTextField.setStyle("");
+                }
+            }
+        });
     }
     @FXML
     public void setLogoutAction()
@@ -160,7 +203,7 @@ public class AdminControl
         }
         else if (selectedAccess.equals("CM")) {
             if (AULRepository.login(du.getUsername(), du.getPassword())) {
-                showMessage(Alert.AlertType.WARNING, "CM Register", "User already exists in authors (skipped) !");
+                showMessage(Alert.AlertType.WARNING, "CM Register", "User already exists in authors (skipped) !\nPending for register in CM...");
             }
             if (CMLRepository.login(du.getUsername(), du.getPassword())) {
                 showMessage(Alert.AlertType.ERROR, "CM Register", "User already exists in CM !");
@@ -172,6 +215,15 @@ public class AdminControl
         else if (selectedAccess.equals("Reviewer")) {
             CMLRepository.save(du.getUsername(), du.getPassword(), info1, info2, info3, info4);
         }
+        else {
+            showMessage(Alert.AlertType.WARNING, "Warning !", "Register failed...");
+            return;
+        }
+
+        DURepo.delete(du.getUsername());
+        usersComboBox.getItems().removeIf(u -> u.getUsername().equals(du.getUsername()));
+
+        showMessage(Alert.AlertType.CONFIRMATION, "Register OK", "Register OK");
     }
     @FXML public void deleteButtonOnAction() {
     }
@@ -190,6 +242,11 @@ public class AdminControl
         } else if (selectedInfo.equals("WebPage")) {
             info4 = infoTextField.getText();
         }
+        else {
+            showMessage(Alert.AlertType.WARNING, "Warning info !", "You have to select a field from above box !");
+            return;
+        }
+        showMessage(Alert.AlertType.CONFIRMATION, "Confirmation info !", "Information saved for field <"+selectedInfo+">");
     }
     private static void showMessage(Alert.AlertType type, String header, String message)
     {
