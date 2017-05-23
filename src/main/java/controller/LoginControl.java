@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.ResourceBundle;
 
 /**
@@ -39,15 +40,17 @@ public class LoginControl implements Initializable {
     private AuthorsRepository AULRepository;
     private ReviewerRepository RVWRepo;
     private AdminRepository ADRepo;
+    private DefaultUserRepository DURepo;
 
 
-    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo, AdminRepository ADRepo)
+    public LoginControl(CMRepository cmloginRep, AttendantRepository atloginrep, AuthorsRepository atuloginrep, ReviewerRepository RVWRepo, AdminRepository ADRepo, DefaultUserRepository DURepo)
     {
         this.CMLRepository = cmloginRep;
         this.ATLRepository = atloginrep;
         this.AULRepository = atuloginrep;
         this.RVWRepo = RVWRepo;
         this.ADRepo = ADRepo;
+        this.DURepo = DURepo;
         this.secondStage = new Stage();
     }
 
@@ -147,7 +150,7 @@ public class LoginControl implements Initializable {
             URL fxmlUrl = new File(pathToFxml).toURI().toURL();
             loader.setLocation(fxmlUrl);
 
-            RegisterControl registerCont = new RegisterControl();
+            RegisterControl registerCont = new RegisterControl(DURepo);
             loader.setController(registerCont);
             AnchorPane rootLayout1;
             Scene scene1;

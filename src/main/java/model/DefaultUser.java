@@ -8,7 +8,9 @@ public class DefaultUser {
         this.username = username;
         this.password = password;
     }
-    public DefaultUser() {}
+
+    public DefaultUser() {
+    }
 
     public String getUsername() {
         return username;
@@ -28,4 +30,8 @@ public class DefaultUser {
 
     private String username, password;
 
+    @Override
+    public String toString() {
+        return username;
+    }
 }

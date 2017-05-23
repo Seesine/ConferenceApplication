@@ -2,11 +2,14 @@ package main;
 
 import controller.*;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import database.Database;
+import javafx.stage.WindowEvent;
 import org.hibernate.SessionFactory;
 import repository.*;
 import javafx.event.ActionEvent;
@@ -92,7 +95,7 @@ public class Main extends Application
             URL fxmlUrl = new File(pathToFxml).toURI().toURL();
             loader.setLocation(fxmlUrl);
 
-            controlLogin = new LoginControl(CMLRepository,ATLRepository,AULRepository,RVWRepo,ADRepo);
+            controlLogin = new LoginControl(CMLRepository,ATLRepository,AULRepository,RVWRepo,ADRepo, DURepo);
             loader.setController(controlLogin);
             rootLayout1 = loader.load();
             scene1 = new Scene(rootLayout1);
@@ -193,7 +196,13 @@ public class Main extends Application
         {
             ex.printStackTrace();
         }
-
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         LoginView();
     }
 
@@ -246,10 +255,12 @@ public class Main extends Application
     {
         primaryStage.setScene(scene5);
         primaryStage.show();
+        controlAdmin.initialize();
     }
     private void AttendantView()
     {
         primaryStage.setScene(scene6);
         primaryStage.show();
+        controlAttendant.initialize();
     }
 }

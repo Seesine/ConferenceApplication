@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -16,5 +18,10 @@
       <Button fx:id="deleteButton" layoutX="99.0" layoutY="185.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" prefHeight="25.0" prefWidth="66.0" text="Delete" />
       <ComboBox fx:id="infoComboBox" layoutX="15.0" layoutY="114.0" prefWidth="150.0" promptText="Optional Info..." />
       <TextField fx:id="infoTextField" layoutX="16.0" layoutY="147.0" onKeyReleased="#infoTextFieldOnKeyReleased" />
+      <Label fx:id="infoLabel" layoutX="32.0" layoutY="172.0" text="For saving info, press Enter">
+         <font>
+            <Font name="System Bold" size="9.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
