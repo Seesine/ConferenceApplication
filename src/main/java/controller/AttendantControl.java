@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import repository.ConfRepository;
 import model.Sections;
+import services.AuthorService;
 import sun.swing.SwingUtilities2;
 import services.AttendantService;
 
@@ -30,6 +33,7 @@ public class AttendantControl
 {
     final Main loginManager;
     private ConfRepository confRepo = new ConfRepository();
+    private AuthorService service;
     public AttendantControl(final Main loginManager, SessionFactory factory) {
         this.loginManager = loginManager;
         this.factory = factory;
@@ -72,23 +76,16 @@ public class AttendantControl
         //conferenceComboBox.setEditable(true);
 
         try{
-            Conference conf = conferenceComboBox.getSelectionModel().getSelectedItem();
-            int id = conf.getIdConference();
-            ObservableList<Sections> sesiuni;
-            //Transaction tx = null;
-            //Session ses = factory.openSession();
-            /*try{
-                tx = ses.beginTransaction();
-                Query query = ses.createQuery("FROM Sections WHERE id = :id");
-                query.setParameter("id", id);
-                List<Sections> sectionsList = query.list();
-                tx.commit();
-            }
-            catch(HibernateException ex1){
-                if (tx != null) tx.rollback();
-                ex1.printStackTrace();
-            }*/
-            //sesiuni = FXCollections.observableArrayList(service.)
+            //Conference conf = conferenceComboBox.getSelectionModel().getSelectedItem();
+            //int id = conf.getIdConference();
+            //ObservableList<Sections> sesiuni;
+            conferenceComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Conference>() {
+                @Override
+                public void changed(ObservableValue<? extends Conference> observable, Conference oldValue, Conference newValue) {
+                    ObservableList tableView = FXCollections.observableArrayList((List) service.findByConfId(conferenceComboBox.getValue().getIdConference()));
+                    sectionTableView.setItems(tableView);
+                }
+            });
 
 
         }
