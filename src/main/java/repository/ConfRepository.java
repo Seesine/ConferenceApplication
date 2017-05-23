@@ -41,14 +41,6 @@ public class ConfRepository {
         {
             tx = session.beginTransaction();
             conferences = session.createQuery("FROM Conference").list();
-            for (Iterator iterator = conferences.iterator(); iterator.hasNext();)
-            {
-                Conference f = (Conference) iterator.next();
-                System.out.print("IdConference: " + f.getIdConference());
-                System.out.print("noParticipants: " + f.getNoParticipants());
-                System.out.println("Name: " + f.getName());
-                //System.out.println("Deadline: " + f.getDeadline());
-            }
             tx.commit();
         }
         catch (HibernateException e)
