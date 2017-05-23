@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,5 +59,29 @@ public class ReviewerRepository implements CRUDRepository{
                 return true;
         }
         return false;
+    }
+    public void save(String username, String password, String name, String affiliation, String email, String webpage) {
+        Transaction tx = null;
+        boolean ret = false;
+        Session ses = factory.openSession();
+        try{
+            tx = ses.beginTransaction();
+            Query query = ses.createNativeQuery("INSERT INTO CM (username, password, name, affiliation, email, webpage) VALUES (:username, :password, :name, :affiliation, :email, :webpage)");
+            query.setParameter("username", username);
+            query.setParameter("password", password);
+            query.setParameter("name", name);
+            query.setParameter("affiliation", affiliation);
+            query.setParameter("email", email);
+            query.setParameter("webpage", webpage);
+            query.executeUpdate();
+            tx.commit();
+        }
+        catch (HibernateException ex){
+            if (tx != null) tx.rollback();
+            ex.printStackTrace();
+        }
+        finally{
+            ses.close();
+        }
     }
 }
